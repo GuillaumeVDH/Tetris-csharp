@@ -72,6 +72,8 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.cs" />
+    <Compile Include="Pieces\Piece.cs" />
     <Compile Include="Pieces\PieceL.cs" />
     <Compile Include="Pieces\PieceO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
