@@ -78,6 +78,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="TetrisGame.cs" />
+    <Compile Include="Utils\TabUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
