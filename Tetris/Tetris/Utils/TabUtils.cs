@@ -7,7 +7,7 @@ namespace Tetris.Utils
 {
     class TabUtils
     {
-        public void rotate(ref int[,] tab)
+        internal static void rotate(ref int[,] tab)
         {
             if (tab.Rank != 2)
             {
@@ -40,7 +40,7 @@ namespace Tetris.Utils
             }
         }
 
-        public int countEmptyColumns(int[,] tab)
+        internal static int countEmptyColumns(int[,] tab)
         {
             if (tab.Rank != 2)
             {
@@ -66,7 +66,7 @@ namespace Tetris.Utils
             return count;
         }
 
-        public int countEmptyRows(int[,] tab)
+        internal static int countEmptyRows(int[,] tab)
         {
             if (tab.Rank != 2)
             {
