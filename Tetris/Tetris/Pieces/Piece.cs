@@ -1,18 +1,18 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
 
 namespace Tetris.Pieces
 {
-    class PieceL : Sprite
+    class Piece : Sprite
     {
-        //Screen
         private int _screenHeight;
         private int _screenWidth;
+        private int _type;
 
-        public PieceL(int screenWidth, int screenHeight)
+        public Piece(Common.PieceType type, int screenWidth, int screenHeight)
         {
             _screenWidth = screenWidth;
             _screenHeight = screenHeight;
@@ -33,7 +33,6 @@ namespace Tetris.Pieces
 
         public override void Update(GameTime gameTime)
         {
-
             if ( (Position.Y <= 0 && Direction.Y < 0) || (Position.Y > _screenHeight - Texture.Height && Direction.Y > 0) )
             {
                 Direction = new Vector2(Direction.X, -Direction.Y);
@@ -44,5 +43,11 @@ namespace Tetris.Pieces
             }
             base.Update(gameTime);
         }
+
+        public int Type
+        {
+            get { return _type; }
+        }
+        
     }
 }
