@@ -49,7 +49,8 @@ namespace Tetris.Utils
 
             int count = 0, x;
 
-            for (int j = tab.GetLength(1); j >= 0; j--)
+            //we count the columns from the left
+            for (int j = 0; j < tab.GetLength(1); j++)
             {
                 x = 0;
 
@@ -57,7 +58,7 @@ namespace Tetris.Utils
                 {
                     x += tab[i, j];
                 }
-                if (x == 0)
+                if (x == 0 && count == j )
                 {
                     count++;
                 }
@@ -75,15 +76,16 @@ namespace Tetris.Utils
 
             int count = 0, x;
 
-            for (int i = 0; i < tab.GetLength(0); i++)
+            //we count the rows from the bottom
+            for (int i = tab.GetLength(0) - 1; i >= 0; i--)
             {
                 x = 0;
 
-                for (int j = 0; i < tab.GetLength(j); j++)
+                for (int j = 0; j < tab.GetLength(1); j++)
                 {
                     x += tab[i, j];
                 }
-                if (x == 0)
+                if (x == 0 && count == tab.GetLength(0) - 1 - i)
                 {
                     count++;
                 }
@@ -92,7 +94,7 @@ namespace Tetris.Utils
             return count;
         }
 
-        public void print(int[,] tab)
+        internal static void print(int[,] tab)
         {
             if (tab.Rank != 2)
             {

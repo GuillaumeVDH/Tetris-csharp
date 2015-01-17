@@ -74,11 +74,16 @@
   <ItemGroup>
     <Compile Include="Common.cs" />
     <Compile Include="Pieces\Piece.cs" />
-    <Compile Include="Pieces\PieceL.cs" />
-    <Compile Include="Pieces\PieceO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Shape\Shape.cs" />
+    <Compile Include="Shape\ShapeI.cs" />
+    <Compile Include="Shape\ShapeJ.cs" />
+    <Compile Include="Shape\ShapeL.cs" />
+    <Compile Include="Shape\ShapeO.cs" />
+    <Compile Include="Shape\ShapeS.cs" />
+    <Compile Include="Shape\ShapeT.cs" />
+    <Compile Include="Shape\ShapeZ.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="TetrisGame.cs" />
     <Compile Include="Utils\TabUtils.cs" />

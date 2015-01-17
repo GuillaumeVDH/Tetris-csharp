@@ -21,6 +21,7 @@ namespace Tetris
         SpriteBatch spriteBatch;
         private Pieces.Piece _pieceL;
         private Pieces.Piece _pieceO;
+        private Shape.ShapeT _shapeT;
 
         //Player
         private KeyboardState _keyboardState;
@@ -64,6 +65,12 @@ namespace Tetris
             _pieceL.Initialize();
             _pieceO = new Pieces.Piece(Common.PieceType.pieceO,_screenWidth, _screenHeight);
             _pieceO.Initialize();
+
+            _shapeT = new Shape.ShapeT();
+            _shapeT.rotate();
+            _shapeT.rotate();
+            _shapeT.rotate();
+            _shapeT.rotate();
 
             base.Initialize();
         }
