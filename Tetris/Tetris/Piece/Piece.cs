@@ -3,26 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Tetris.Pieces
+namespace Tetris.Piece
 {
     abstract class Piece
     {
-        private int[,] shape;
-        private int indice_rotation;
-        private int coordonnee_x;
-        private int coordonnee_y;
+        protected Shape.Shape shape;
+        private int x_axis;
+        private int y_axis;
 
         public Piece()
         {
-            this.shape = new int[4, 4];
-
+            this.initShape();
+            //init the piece outside the board
+            this.x_axis = 4;
+            this.y_axis = -3;
         }
 
-        public void placerDansCoin()
+        public void rotate()
         {
-
+            this.shape.rotate();
         }
 
-        abstract private void initShape();
+        abstract protected void initShape();
+
+        public void moveRight()
+        {
+            this.x_axis += 1;
+        }
+
+        public void moveLeft()
+        {
+            this.x_axis -= 1;
+        }
+
+        public void meveDown()
+        {
+            this.y_axis += 1;
+        }
+
+        public void print(){
+            this.shape.print();
+        }
     }
 }

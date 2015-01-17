@@ -19,8 +19,9 @@ namespace Tetris
         //Graphic
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private Pieces.PieceL _pieceL;
-        private Pieces.PieceO _pieceO;
+        private Pieces.Piece _pieceL;
+        private Pieces.Piece _pieceO;
+        private Piece.PieceI _pieceI;
 
         //Player
         private KeyboardState _keyboardState;
@@ -60,10 +61,13 @@ namespace Tetris
             _screenHeight = Window.ClientBounds.Height;
 
             //Init attributs
-            _pieceL = new Pieces.PieceL(_screenWidth, _screenHeight);
+            _pieceL = new Pieces.Piece(Common.PieceType.pieceL ,_screenWidth, _screenHeight);
             _pieceL.Initialize();
-            _pieceO = new Pieces.PieceO(_screenWidth, _screenHeight);
+            _pieceO = new Pieces.Piece(Common.PieceType.pieceO,_screenWidth, _screenHeight);
             _pieceO.Initialize();
+
+            _pieceI = new Piece.PieceI();
+            _pieceI.print();
 
             base.Initialize();
         }
@@ -77,6 +81,9 @@ namespace Tetris
             // TODO: use this.Content to load your game content here
             _pieceL.LoadContent(Content, "pieces/L");
             _pieceO.LoadContent(Content, "pieces/O");
+
+            _pieceO.Position = new Vector2(40, 80);
+
             // Extract collision data
             pieceLTextureData = new Color[_pieceL.Texture.Width * _pieceL.Texture.Height];
             _pieceL.Texture.GetData(pieceLTextureData);
