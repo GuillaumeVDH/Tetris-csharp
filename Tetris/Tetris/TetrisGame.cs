@@ -19,8 +19,6 @@ namespace Tetris
         //Graphic
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private Pieces.Piece _pieceL;
-        private Pieces.Piece _pieceO;
         private Piece.PieceI _pieceI;
 
         //Player
@@ -31,11 +29,7 @@ namespace Tetris
         private int _screenHeight;
         private int _screenWidth;
 
-        Color[] pieceLTextureData;
-        Color[] pieceOTextureData;
-
-
-        private bool _collision = false;
+        private List<Block.ABlock> _blocks;
 
         public TetrisGame()
         {
@@ -43,6 +37,7 @@ namespace Tetris
             
             graphics = new GraphicsDeviceManager(this);
             graphics.SynchronizeWithVerticalRetrace = false;
+            _blocks = new List<Block.ABlock>();
 
             Content.RootDirectory = "Content";
         }
@@ -60,14 +55,21 @@ namespace Tetris
             _screenWidth = Window.ClientBounds.Width;
             _screenHeight = Window.ClientBounds.Height;
 
-            //Init attributs
-            _pieceL = new Pieces.Piece(Common.PieceType.pieceL ,_screenWidth, _screenHeight);
-            _pieceL.Initialize();
-            _pieceO = new Pieces.Piece(Common.PieceType.pieceO,_screenWidth, _screenHeight);
-            _pieceO.Initialize();
-
+            //Test PIECE/SHAPE & BLOCK
             _pieceI = new Piece.PieceI();
             _pieceI.print();
+            _pieceI.Blocks = null;
+            int tmp = 0;
+            foreach (Block.ABlock block in _pieceI.Blocks)
+            {
+                Console.Write("- " + block.X_axis + "/" + block.Y_axis + "\n"); //TODO DEBUG
+                Console.WriteLine("Common.Board_X: " + Common.boardStartX);
+                Console.WriteLine("block.X_axis: " + block.X_axis);
+                block.Position = new Vector2(Common.boardStartX + block.X_axis*10, Common.boardStartY + block.Y_axis*10);
+                block.LoadContent(Content, "BlockI");
+                _blocks.Add(block);
+                tmp += 10;
+            }
 
             base.Initialize();
         }
@@ -78,19 +80,6 @@ namespace Tetris
         /// </summary>
         protected override void LoadContent()
         {
-            // TODO: use this.Content to load your game content here
-            _pieceL.LoadContent(Content, "pieces/L");
-            _pieceO.LoadContent(Content, "pieces/O");
-
-            _pieceO.Position = new Vector2(40, 80);
-
-            // Extract collision data
-            pieceLTextureData = new Color[_pieceL.Texture.Width * _pieceL.Texture.Height];
-            _pieceL.Texture.GetData(pieceLTextureData);
-
-            pieceOTextureData = new Color[_pieceO.Texture.Width * _pieceO.Texture.Height];
-            _pieceO.Texture.GetData(pieceOTextureData);
-
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
         }
@@ -120,26 +109,6 @@ namespace Tetris
             {
                 this.Exit();
             }
-            // Get the bounding rectangle of the L
-            Rectangle pieceLRectangle =
-                new Rectangle((int)_pieceL.Position.X, (int)_pieceL.Position.Y,
-                _pieceL.Texture.Width, _pieceL.Texture.Height);
-
-            // Get the bounding rectangle of the O
-            Rectangle pieceORectangle =
-                    new Rectangle((int)_pieceO.Position.X, (int)_pieceO.Position.Y,
-                    _pieceO.Texture.Width, _pieceO.Texture.Height);
-
-            if (IntersectPixels(pieceLRectangle, pieceLTextureData,
-                                   pieceORectangle, pieceOTextureData))
-            {
-                _collision = true;
-            }
-            else
-                _collision = false;
-
-            _pieceL.HandleInput(_keyboardState, _mouseState, gameTime);
-            _pieceL.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -150,16 +119,17 @@ namespace Tetris
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            if(_collision)
-             GraphicsDevice.Clear(Color.Pink);
-            else
-                GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            _pieceL.Draw(spriteBatch, gameTime);
-            _pieceO.Draw(spriteBatch, gameTime);
-            spriteBatch.End();
+            //TODO DRAW
             
+            foreach(Block.ABlock block in _blocks)
+            {
+                block.Draw(spriteBatch, gameTime);
+            }
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
 

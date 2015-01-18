@@ -75,7 +75,6 @@
     <Compile Include="Block\Block.cs" />
     <Compile Include="Block\BlockI.cs" />
     <Compile Include="Common.cs" />
-    <Compile Include="Pieces\Piece.cs" />
     <Compile Include="Piece\Piece.cs" />
     <Compile Include="Piece\PieceI.cs" />
     <Compile Include="Piece\PieceJ.cs" />
