@@ -9,7 +9,7 @@ namespace Tetris.Piece
     {
         protected override void initShape()
         {
-            this.shape = new Shape.ShapeJ();
+            //this.shape = new Shape.ShapeJ();
         }
     }
 }
