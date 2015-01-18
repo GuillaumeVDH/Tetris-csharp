@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Tetris.Piece
 {
-    class PieceT : Piece
+    class PieceT : APiece
     {
         protected override void initShape()
         {

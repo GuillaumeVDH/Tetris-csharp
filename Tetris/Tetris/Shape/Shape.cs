@@ -5,11 +5,19 @@ using System.Text;
 
 namespace Tetris.Shape
 {
-    abstract class Shape
+    abstract class AShape
     {
         protected int[,] shape;
 
-        public Shape(){
+        public int[,] Shape
+        {
+            get
+            {
+                return shape;
+            }
+        }
+
+        public AShape(){
             this.shape = new int[4,4];
             this.init();
             this.placeInCorner();

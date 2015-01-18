@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Tetris.Shape
 {
-    class ShapeI : Shape
+    class ShapeI : AShape
     {
         protected override void init()
         {

@@ -5,13 +5,14 @@ using System.Text;
 
 namespace Tetris.Piece
 {
-    abstract class Piece
+    abstract class APiece
     {
-        protected Shape.Shape shape;
+        protected Shape.AShape shape;
+        protected List<Block.ABlock> blocks;
         private int x_axis;
         private int y_axis;
 
-        public Piece()
+        public APiece()
         {
             this.initShape();
             //init the piece outside the board
@@ -43,6 +44,30 @@ namespace Tetris.Piece
 
         public void print(){
             this.shape.print();
+        }
+
+        abstract protected Block.ABlock createBlock(int x, int y);
+
+        public List<Block.ABlock> Blocks
+        {
+            get
+            {
+                return blocks;
+            }
+            set
+            {
+                blocks = new List<Block.ABlock>();
+                for (int i = 0; i < shape.Shape.GetLength(0); i++)
+                {
+                    for (int j = 0; j < shape.Shape.GetLength(1); j++)
+                    {
+                        if (shape.Shape[i, j] > 0)
+                        {
+                            blocks.Add(createBlock(i, j));
+                        }
+                    }
+                }
+            }
         }
     }
 }
