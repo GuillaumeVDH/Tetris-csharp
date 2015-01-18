@@ -11,5 +11,10 @@ namespace Tetris.Piece
         {
             this.shape = new Shape.ShapeZ();
         }
+
+        protected override Block.ABlock createBlock(int x, int y)
+        {
+            return new Block.BlockI(x, y);
+        }
     }
 }
