@@ -57,13 +57,9 @@ namespace Tetris
 
             //Test PIECE/SHAPE & BLOCK
             _pieceI = new Piece.PieceI();
-            _pieceI.print();
-            _pieceI.Blocks = null;
+            _pieceI.Blocks = null; //TODO TO CHANGE @ANTHO
             foreach (Block.ABlock block in _pieceI.Blocks)
             {
-                Console.Write("- " + block.X_axis + "/" + block.Y_axis + "\n"); //TODO DEBUG
-                Console.WriteLine("Common.Board_X: " + Common.boardStartX);
-                Console.WriteLine("block.X_axis: " + block.X_axis);
                 block.Position = new Vector2(Common.boardStartX + block.X_axis*10, Common.boardStartY + block.Y_axis*10);
                 block.LoadContent(Content, "BlockI");
                 _blocks.Add(block);
