@@ -29,17 +29,7 @@ namespace Tetris.Piece
         public APiece()
         {
             Shape = new Shape.ShapeI();
-            Console.WriteLine("222222222222222222222222222222222&");
             Shape = this.getInitShape();
-            if(Shape.Shape == null)
-            {
-                Console.WriteLine("STILL NULL!");
-                
-            }
-            else 
-            { 
-                Console.WriteLine("NOT NULL!");
-            }
             setBlocks();
             //init the piece outside the board
             X_axis = 4;
