@@ -9,13 +9,7 @@ namespace Tetris.Shape
     {
         protected int[,] shape;
 
-        public int[,] Shape
-        {
-            get
-            {
-                return shape;
-            }
-        }
+        public int[,] Shape { get; set; }
 
         public AShape(){
             this.shape = new int[4,4];

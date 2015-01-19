@@ -7,11 +7,9 @@ namespace Tetris.Block
 {
     class BlockI : ABlock
     {
-
         public BlockI(int x, int y) : base(x , y)
         {
-
+            Index = 4;
         }
-        
     }
 }

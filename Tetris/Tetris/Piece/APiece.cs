@@ -7,13 +7,9 @@ namespace Tetris.Piece
 {
     abstract class APiece
     {
-        private Shape.AShape shape;
 
-        protected Shape.AShape Shape
-        {
-            get { return shape; }
-            set { shape = value; }
-        }
+        public Shape.AShape Shape {get; set;}
+
         protected List<Block.ABlock> blocks;
         private int x_axis;
 
@@ -32,7 +28,7 @@ namespace Tetris.Piece
 
         public APiece()
         {
-            initShape();
+            Shape = getInitShape();
             setBlocks();
             //init the piece outside the board
             X_axis = 4;
@@ -41,11 +37,11 @@ namespace Tetris.Piece
 
         public void rotate()
         {
-            this.shape.rotate();
+            Shape.rotate();
             setBlocks();
         }
 
-        abstract protected void initShape();
+        abstract protected Shape.AShape getInitShape();
 
         public void moveRight()
         {
@@ -63,7 +59,7 @@ namespace Tetris.Piece
         }
 
         public void print(){
-            this.shape.print();
+            Shape.print();
         }
 
         abstract protected Block.ABlock createBlock(int x, int y);
@@ -71,11 +67,11 @@ namespace Tetris.Piece
         protected void setBlocks()
         {
             blocks = new List<Block.ABlock>();
-            for (int i = 0; i < shape.Shape.GetLength(0); i++)
+            for (int i = 0; i < Shape.Shape.GetLength(0); i++)
             {
-                for (int j = 0; j < shape.Shape.GetLength(1); j++)
+                for (int j = 0; j < Shape.Shape.GetLength(1); j++)
                 {
-                    if (shape.Shape[i, j] > 0)
+                    if (Shape.Shape[i, j] > 0)
                     {
                         blocks.Add(createBlock(i, j));
                     }

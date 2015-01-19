@@ -74,16 +74,10 @@
   <ItemGroup>
     <Compile Include="Block\ABlock.cs" />
     <Compile Include="Block\BlockI.cs" />
+    <Compile Include="Board.cs" />
     <Compile Include="Common.cs" />
-    <Compile Include="Pieces\Piece.cs" />
     <Compile Include="Piece\APiece.cs" />
     <Compile Include="Piece\PieceI.cs" />
-    <Compile Include="Piece\PieceJ.cs" />
-    <Compile Include="Piece\PieceL.cs" />
-    <Compile Include="Piece\PieceO.cs" />
-    <Compile Include="Piece\PieceS.cs" />
-    <Compile Include="Piece\PieceT.cs" />
-    <Compile Include="Piece\PieceZ.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Shape\AShape.cs" />

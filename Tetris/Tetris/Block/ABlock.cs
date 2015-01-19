@@ -7,7 +7,7 @@ namespace Tetris.Block
 {
     abstract class ABlock : Sprite
     {
-
+        public int Index { get; set; }
         private int x_axis;
 
         public int X_axis

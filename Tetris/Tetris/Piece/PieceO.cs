@@ -7,7 +7,7 @@ namespace Tetris.Piece
 {
     class PieceO : APiece
     {
-        protected override void initShape()
+        protected override void getInitShape()
         {
             Shape = new Shape.ShapeO();
         }
