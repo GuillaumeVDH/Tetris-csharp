@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,6 +61,35 @@ namespace Tetris
             }
 
             return result;
+        }
+
+        /*
+         * Load all the graphic blocks contened by the Board to the Content
+         * @param: The ContentManager object
+         */
+        /*
+        public void loadBoard(ContentManager content)
+        {
+            for(int x=0; x < Blocks.GetUpperBound(0); x++)
+            {
+                for(int y=0; y < Blocks.GetUpperBound(1); y++)
+                {
+                    if(Blocks[x,y] != null)
+                        Blocks[x, y].LoadContent(content, "BlockI");
+                }
+            }
+        }*/
+
+        public void drawBoard(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            for (int x = 0; x < Blocks.GetUpperBound(0); x++)
+            {
+                for (int y = 0; y < Blocks.GetUpperBound(1); y++)
+                {
+                    if (Blocks[x, y] != null)
+                        Blocks[x, y].Draw(spriteBatch, gameTime);
+                }
+            }
         }
 
     }

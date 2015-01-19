@@ -7,12 +7,10 @@ namespace Tetris.Shape
 {
     abstract class AShape
     {
-        protected int[,] shape;
-
         public int[,] Shape { get; set; }
 
         public AShape(){
-            this.shape = new int[4,4];
+            this.Shape = new int[4,4];
             this.init();
             this.placeInCorner();
         }
@@ -29,45 +27,45 @@ namespace Tetris.Shape
             int nb_rows = 0, nb_col = 0;
             int[,] temp;
 
-            nb_rows = Tetris.Utils.TabUtils.countEmptyRows(this.shape);
-            nb_col = Tetris.Utils.TabUtils.countEmptyColumns(this.shape);
+            nb_rows = Tetris.Utils.TabUtils.countEmptyRows(this.Shape);
+            nb_col = Tetris.Utils.TabUtils.countEmptyColumns(this.Shape);
 
             if (nb_col > 0)
             {
-                temp = new int[this.shape.GetLength(0), this.shape.GetLength(1)];
+                temp = new int[this.Shape.GetLength(0), this.Shape.GetLength(1)];
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 4; j++)
                     {
                         if ((j + nb_col) < 4)
                         {
-                            temp[i, j] = this.shape[i, j + nb_col];
+                            temp[i, j] = this.Shape[i, j + nb_col];
                         }
                     }
                 }
-                this.shape = temp;
+                this.Shape = temp;
             }
 
             if (nb_rows > 0)
             {
-                temp = new int[this.shape.GetLength(0), this.shape.GetLength(1)];
+                temp = new int[this.Shape.GetLength(0), this.Shape.GetLength(1)];
                 for (int i = 3; i >= 0; i--)
                 {
                     for (int j = 0; j < 4; j++)
                     {
                         if ((i - nb_rows) >= 0)
                         {
-                            temp[i, j] = this.shape[i - nb_rows, j];
+                            temp[i, j] = this.Shape[i - nb_rows, j];
                         }
                     }
                 }
-                this.shape = temp;
+                this.Shape = temp;
             }
         }
 
         public void print()
         {
-            Tetris.Utils.TabUtils.print(this.shape);
+            Tetris.Utils.TabUtils.print(this.Shape);
         }
     }
 }

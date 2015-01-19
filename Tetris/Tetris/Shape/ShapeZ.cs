@@ -9,7 +9,7 @@ namespace Tetris.Shape
     {
         protected override void init()
         {
-            this.shape = new int[,]
+            this.Shape = new int[,]
                 {
                     {0,0,0,0},
                     {0,7,7,0},

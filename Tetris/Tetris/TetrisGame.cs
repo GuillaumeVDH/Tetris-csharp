@@ -21,6 +21,9 @@ namespace Tetris
         SpriteBatch spriteBatch;
         private Piece.PieceI _pieceI;
 
+        //Board
+        Board _board;
+
         //Player
         private KeyboardState _keyboardState;
         private MouseState _mouseState;
@@ -38,6 +41,7 @@ namespace Tetris
             graphics = new GraphicsDeviceManager(this);
             graphics.SynchronizeWithVerticalRetrace = false;
             _blocks = new List<Block.ABlock>();
+            _board = new Board();
 
             Content.RootDirectory = "Content";
         }
@@ -63,6 +67,8 @@ namespace Tetris
                 block.LoadContent(Content, "BlockI");
                 _blocks.Add(block);
             }
+
+            //_board.loadBoard(Content);
 
             base.Initialize();
         }
@@ -121,6 +127,7 @@ namespace Tetris
             {
                 block.Draw(spriteBatch, gameTime);
             }
+            //_board.drawBoard(spriteBatch, gameTime);
 
             spriteBatch.End();
             base.Draw(gameTime);
