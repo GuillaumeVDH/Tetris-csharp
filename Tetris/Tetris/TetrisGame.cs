@@ -67,8 +67,7 @@ namespace Tetris
                 block.LoadContent(Content, "BlockI");
                 _blocks.Add(block);
             }
-
-            //_board.loadBoard(Content);
+            _board.addPiece(_pieceI, Content);
 
             base.Initialize();
         }
@@ -125,9 +124,9 @@ namespace Tetris
             
             foreach(Block.ABlock block in _blocks)
             {
-                block.Draw(spriteBatch, gameTime);
+                //block.Draw(spriteBatch, gameTime);
             }
-            //_board.drawBoard(spriteBatch, gameTime);
+            _board.drawBoard(spriteBatch, gameTime);
 
             spriteBatch.End();
             base.Draw(gameTime);

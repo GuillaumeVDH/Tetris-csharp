@@ -8,25 +8,23 @@ namespace Tetris.Block
     abstract class ABlock : Sprite
     {
         public int Index { get; set; }
-        private int x_axis;
 
         public int X_axis
         {
-            get { return x_axis; }
-            set { x_axis = value; }
+            get;
+            set;
         }
-        private int y_axis;
 
         public int Y_axis
         {
-            get { return y_axis; }
-            set { y_axis = value; }
+            get;
+            set;
         }
 
         public ABlock(int x, int y)
         {
-            x_axis = x;
-            y_axis = y;
+            this.X_axis = x;
+            this.Y_axis = y;
         }
     }
 }

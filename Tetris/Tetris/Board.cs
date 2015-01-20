@@ -5,15 +5,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Tetris.Block;
 
 namespace Tetris
 {
     class Board
     {
+        public Board()
+        {
+            Blocks = new ABlock[10,20];
+        }
+
         public int Width { get; set; }
         public int Height { get; set; }
 
-        public Block.ABlock[,] Blocks { get; set; }
+        public ABlock[,] Blocks { get; set; }
 
         public void addBlock(Block.ABlock block)
         {
@@ -24,10 +30,11 @@ namespace Tetris
             Blocks[block.X_axis, block.Y_axis] = null;
         }
 
-        public void addPiece(Piece.APiece piece){
+        public void addPiece(Piece.APiece piece, ContentManager content){
             foreach (Block.ABlock block in piece.Blocks)
             {
-                addBlock(block);
+                block.LoadContent(content, "BlockI");
+                this.addBlock(block);
             }
         }
 

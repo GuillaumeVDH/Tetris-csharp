@@ -15,7 +15,7 @@ namespace Tetris
 
         static public int boardStartX = 100;
         static public int boardStartY = 40;
-        static public int boardWidth = 160;
-        static public int boardHeight = 240;
+        static public int boardWidth = 604;
+        static public int boardHeight = 831;
     }
 }

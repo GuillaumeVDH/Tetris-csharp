@@ -28,7 +28,6 @@ namespace Tetris.Piece
 
         public APiece()
         {
-            Shape = new Shape.ShapeI();
             Shape = this.getInitShape();
             setBlocks();
             //init the piece outside the board
