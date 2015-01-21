@@ -13,7 +13,7 @@ namespace Tetris
     {
         public Board()
         {
-            Blocks = new ABlock[10,20];
+            Blocks = new ABlock[Common.boardSizeX,Common.boardSizeY];
         }
 
         public int Width { get; set; }
