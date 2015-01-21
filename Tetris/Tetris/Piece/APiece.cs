@@ -18,7 +18,12 @@ namespace Tetris.Piece
         public int X_axis
         {
             get { return x_axis; }
-            set { x_axis = value; }
+            set 
+            {
+                if(value >= 0 && value <= Common.boardSizeX)
+                    x_axis = value;
+                Console.WriteLine("Val: " + value);
+            }
         }
         private int y_axis;
 
@@ -47,13 +52,13 @@ namespace Tetris.Piece
 
         public void moveRight(ContentManager content)
         {
-            this.x_axis += 1;
+            this.X_axis = this.x_axis+1;
             this.updatePiece(content);
         }
 
         public void moveLeft(ContentManager content)
         {
-            this.x_axis -= 1;
+            this.X_axis = this.x_axis-1;
             this.updatePiece(content);
         }
 
