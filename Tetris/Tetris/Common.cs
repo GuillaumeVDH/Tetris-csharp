@@ -24,5 +24,7 @@ namespace Tetris
         static public string blockTextureS = "Blocks/BlockS";
         static public string blockTextureT = "Blocks/BlockT";
         static public string blockTextureZ = "Blocks/BlockZ";
+
+        static public string backgroundTexture = "background";
     }
 }

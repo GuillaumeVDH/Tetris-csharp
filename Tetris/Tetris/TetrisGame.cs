@@ -19,6 +19,8 @@ namespace Tetris
         //Graphic
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        private Texture2D _background;
         private Piece.PieceI _piece;
 
         //Board
@@ -55,6 +57,9 @@ namespace Tetris
             //Get window size
             _screenWidth = Window.ClientBounds.Width;
             _screenHeight = Window.ClientBounds.Height;
+
+            
+            _background = Content.Load<Texture2D>(Common.backgroundTexture);
 
             //Test PIECE/SHAPE & BLOCK
             _piece = new Piece.PieceI();
@@ -145,9 +150,8 @@ namespace Tetris
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
-
+            spriteBatch.Draw(_background, Vector2.Zero, Color.White);
             //DRAW the piece
             foreach(Block.ABlock block in _piece.Blocks)
             {
