@@ -42,7 +42,7 @@ namespace Tetris
                 try {
                     this.addBlock(block, piece.X_axis, piece.Y_axis);
                     block.Position = new Vector2(Common.boardStartX + (piece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + (piece.Y_axis + block.Y_axis) * Common.blockTextureSize);
-                    block.LoadContent(content, block.Texture); //TODO may fucked up things later as piece should already be loaded before being added to board.
+                    //block.LoadContent(content, block.Texture); //TODO may fucked up things later as piece should already be loaded before being added to board.
                 }
                 catch (Exception e) {
                     Console.WriteLine(e.Message);

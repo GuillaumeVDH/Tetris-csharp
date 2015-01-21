@@ -60,7 +60,7 @@ namespace Tetris
             _piece = new Piece.PieceI();
             foreach (Block.ABlock block in _piece.Blocks)
             {
-                block.Position = new Vector2(_piece.X_axis + block.X_axis * Common.blockTextureSize, _piece.Y_axis + block.Y_axis * Common.blockTextureSize);
+                block.Position = new Vector2(Common.boardStartX + (_piece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + (_piece.Y_axis + block.Y_axis) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
 
@@ -117,30 +117,24 @@ namespace Tetris
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // TODO: Add your update logic 
             _keyboardState = Keyboard.GetState();
             _mouseState = Mouse.GetState();
 
-
-            //Player mouvements
+            //Player interactions
             if (_keyboardState.IsKeyDown(Keys.Down) && _previousKeyboardState.IsKeyDown(Keys.Down))
                 _piece.moveDown(Content);
             else if (_keyboardState.IsKeyDown(Keys.Left) && _previousKeyboardState.IsKeyDown(Keys.Left))
                 _piece.moveLeft(Content);
             else if (_keyboardState.IsKeyDown(Keys.Right) && _previousKeyboardState.IsKeyDown(Keys.Right))
                 _piece.moveRight(Content);
-            _previousKeyboardState = _keyboardState;
-
-            // Allows the game to exit
-            if (_keyboardState.IsKeyDown(Keys.Escape))
-            {
+            else if (_keyboardState.IsKeyDown(Keys.Escape))
                 this.Exit();
-            }
             else if (_keyboardState.IsKeyDown(Keys.Space))
             {
                 _board.addPiece(_piece, Content);
                 _piece = new Piece.PieceI();
             }
+            _previousKeyboardState = _keyboardState;
 
             base.Update(gameTime);
         }
@@ -152,7 +146,6 @@ namespace Tetris
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            // TODO: Add your drawing code here
             spriteBatch.Begin();
 
             //DRAW the piece
@@ -162,7 +155,7 @@ namespace Tetris
             }
 
             //DRAW the board
-            _board.drawBoard(spriteBatch, gameTime);
+            //_board.drawBoard(spriteBatch, gameTime);
 
             spriteBatch.End();
             base.Draw(gameTime);
