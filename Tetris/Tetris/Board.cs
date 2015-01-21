@@ -54,11 +54,12 @@ namespace Tetris
         {
             bool result = true;
             int sum, j = 0, i;
+
             while (j < 4 && result)
             {
                 i = 3;
                 sum = 0;
-                while (sum == 0 && i >= 0)
+                while (sum == 0 && i >= 0 && result)
                 {
                     if (piece.Shape.Shape[i,j] != 0)
                     {
@@ -77,6 +78,73 @@ namespace Tetris
                     }
                     j++;
                 }
+            }
+
+            return result;
+        }
+
+        public bool canMoveRight(Piece.APiece piece)
+        {
+            bool result = true;
+            int sum, i = 0, j;
+
+            while(i < 4 && result)
+            {
+                j = 3;
+                sum = 0;
+
+                while (sum == 0 && j >= 0 && result)
+                {
+                    if (piece.Shape.Shape[i, j] != 0)
+                    {
+                        sum += piece.Shape.Shape[i, j];
+                    }
+                    else
+                    {
+                        j--;
+                    }
+                    if (sum != 0)
+                    {
+                        if(Blocks[piece.Y_axis + i, piece.X_axis + j + 1].Index != 0)
+                        {
+                            result = false;
+                        }
+                    }
+                }
+                i++;
+            }
+
+            return result;
+        }
+
+        public bool canMoveLeft(Piece.APiece piece){
+            bool result = true;
+            int sum, i = 0, j;
+
+            while (i < 4 && result)
+            {
+                j = 3;
+                sum = 0;
+
+                while (sum == 0 && j < 4 && result)
+                {
+                    if (piece.Shape.Shape[i, j] != 0)
+                    {
+                        sum += piece.Shape.Shape[i, j];
+                    }
+                    else
+                    {
+                        j++;
+                    }
+                    if (sum != 0)
+                    {
+                        if (Blocks[piece.Y_axis + i, piece.X_axis + j - 1].Index != 0)
+                        {
+                            result = false;
+                        }
+                    }
+                }
+                i++;
             }
 
             return result;
