@@ -26,6 +26,7 @@ namespace Tetris
 
         //Player
         private KeyboardState _keyboardState;
+        private KeyboardState _previousKeyboardState;
         private MouseState _mouseState;
 
         //Screen
@@ -34,7 +35,7 @@ namespace Tetris
 
         public TetrisGame()
         {
-            IsFixedTimeStep = false;
+            IsFixedTimeStep = true;
             
             graphics = new GraphicsDeviceManager(this);
             graphics.SynchronizeWithVerticalRetrace = false;
@@ -59,7 +60,7 @@ namespace Tetris
             _piece = new Piece.PieceI();
             foreach (Block.ABlock block in _piece.Blocks)
             {
-                block.Position = new Vector2(Common.boardStartX + _piece.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + _piece.Y_axis + block.Y_axis * Common.blockTextureSize);
+                block.Position = new Vector2(_piece.X_axis + block.X_axis * Common.blockTextureSize, _piece.Y_axis + block.Y_axis * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
 
@@ -68,8 +69,7 @@ namespace Tetris
             piece1 = new Piece.PieceI();
             piece1.X_axis = 0;
             piece1.Y_axis = 0;
-            //piece1.X_axis = Common.boardStartX+0*Common.blockTextureSize;
-            //piece1.Y_axis = Common.boardStartY+0*Common.blockTextureSize;
+
             foreach (Block.ABlock block in piece1.Blocks)
             {
                 block.Position = new Vector2(Common.boardStartX + piece1.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + piece1.Y_axis + block.Y_axis * Common.blockTextureSize);
@@ -87,7 +87,6 @@ namespace Tetris
             }
             _board.addPiece(piece1, Content);
             _board.addPiece(piece2, Content);
-            
             
             base.Initialize();
         }
@@ -122,10 +121,25 @@ namespace Tetris
             _keyboardState = Keyboard.GetState();
             _mouseState = Mouse.GetState();
 
+
+            //Player mouvements
+            if (_keyboardState.IsKeyDown(Keys.Down) && _previousKeyboardState.IsKeyDown(Keys.Down))
+                _piece.moveDown(Content);
+            else if (_keyboardState.IsKeyDown(Keys.Left) && _previousKeyboardState.IsKeyDown(Keys.Left))
+                _piece.moveLeft(Content);
+            else if (_keyboardState.IsKeyDown(Keys.Right) && _previousKeyboardState.IsKeyDown(Keys.Right))
+                _piece.moveRight(Content);
+            _previousKeyboardState = _keyboardState;
+
             // Allows the game to exit
             if (_keyboardState.IsKeyDown(Keys.Escape))
             {
                 this.Exit();
+            }
+            else if (_keyboardState.IsKeyDown(Keys.Space))
+            {
+                _board.addPiece(_piece, Content);
+                _piece = new Piece.PieceI();
             }
 
             base.Update(gameTime);
@@ -140,11 +154,11 @@ namespace Tetris
             GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            
+
             //DRAW the piece
             foreach(Block.ABlock block in _piece.Blocks)
             {
-                //block.Draw(spriteBatch, gameTime);
+                block.Draw(spriteBatch, gameTime);
             }
 
             //DRAW the board

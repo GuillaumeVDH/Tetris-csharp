@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,19 +45,30 @@ namespace Tetris.Piece
 
         abstract protected Shape.AShape getInitShape();
 
-        public void moveRight()
+        public void moveRight(ContentManager content)
         {
             this.x_axis += 1;
+            this.updatePiece(content);
         }
 
-        public void moveLeft()
+        public void moveLeft(ContentManager content)
         {
             this.x_axis -= 1;
+            this.updatePiece(content);
         }
 
-        public void meveDown()
+        public void moveDown(ContentManager content)
         {
             this.y_axis += 1;
+            this.updatePiece(content);
+        }
+
+        private void updatePiece(ContentManager content)
+        {
+            foreach (Block.ABlock block in this.Blocks)
+            {
+                block.Position = new Vector2((this.X_axis + block.X_axis)*Common.blockTextureSize, (this.Y_axis + block.Y_axis)*Common.blockTextureSize);
+            }
         }
 
         public void print(){
