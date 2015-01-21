@@ -14,6 +14,5 @@ namespace Tetris.Block
         }
 
         public override string Texture { get; set; }
-
     }
 }

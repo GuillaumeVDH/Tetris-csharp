@@ -21,21 +21,32 @@ namespace Tetris
 
         public ABlock[,] Blocks { get; set; }
 
-        public void addBlock(Block.ABlock block)
+        public void addBlock(Block.ABlock block, int piece_x, int piece_y)
         {
-            // Each position is: the board starting position (X or Y) + the piece position in the grid * the size of the sprite
-            Blocks[block.X_axis, block.Y_axis] = block;
+            if ((piece_x + block.X_axis >= 0 && piece_x + block.X_axis <= Common.boardSizeX) && (piece_y + block.Y_axis >= 0 && piece_y + block.Y_axis <= Common.boardSizeY))
+                Blocks[piece_x + block.X_axis, piece_y + block.Y_axis] = block;
+            else
+                throw new Exception("AddBlock - Out of bounds coordinates (x/y):" + piece_x + block.X_axis + "/" + piece_y + block.Y_axis);
         }
 
-        private void removeBlock(Block.ABlock block){
-            Blocks[block.X_axis, block.Y_axis] = null;
+        private void removeBlock(Block.ABlock block, int piece_x, int piece_y){
+            if ((piece_x + block.X_axis >= 0 && piece_x + block.X_axis <= Common.boardSizeX) && (piece_y + block.Y_axis >= 0 && piece_y + block.Y_axis <= Common.boardSizeY))
+                Blocks[piece_x + block.X_axis, piece_y + block.Y_axis] = null;
+            else
+                throw new Exception("removeBlock - Out of bounds coordinates (x/y):" + piece_x + block.X_axis + "/" + piece_y + block.Y_axis);
         }
 
-        public void addPiece(Piece.APiece piece, ContentManager content){
+        public void addPiece(Piece.APiece piece, ContentManager content) {
             foreach (Block.ABlock block in piece.Blocks)
             {
-                block.LoadContent(content, "Blocks/BlockI");
-                this.addBlock(block);
+                try {
+                    this.addBlock(block, piece.X_axis, piece.Y_axis);
+                    block.Position = new Vector2(Common.boardStartX + (piece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + (piece.Y_axis + block.Y_axis) * Common.blockTextureSize);
+                    block.LoadContent(content, block.Texture);
+                }
+                catch (Exception e) {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
 
@@ -71,23 +82,6 @@ namespace Tetris
             return result;
         }
 
-        /*
-         * Load all the graphic blocks contened by the Board to the Content
-         * @param: The ContentManager object
-         */
-        /*
-        public void loadBoard(ContentManager content)
-        {
-            for(int x=0; x < Blocks.GetUpperBound(0); x++)
-            {
-                for(int y=0; y < Blocks.GetUpperBound(1); y++)
-                {
-                    if(Blocks[x,y] != null)
-                        Blocks[x, y].LoadContent(content, "BlockI");
-                }
-            }
-        }*/
-
         public void drawBoard(SpriteBatch spriteBatch, GameTime gameTime)
         {
             for (int x = 0; x < Blocks.GetUpperBound(0); x++)
@@ -95,7 +89,9 @@ namespace Tetris
                 for (int y = 0; y < Blocks.GetUpperBound(1); y++)
                 {
                     if (Blocks[x, y] != null)
+                    {
                         Blocks[x, y].Draw(spriteBatch, gameTime);
+                    }
                 }
             }
         }

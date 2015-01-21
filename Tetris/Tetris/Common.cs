@@ -7,18 +7,15 @@ namespace Tetris
 {
     class Common
     {
-        public enum PieceType
-        {
-            pieceL=1,
-            pieceO,
-        }
 
         static public int boardStartX = 100;
         static public int boardStartY = 40;
-        static public int boardWidth = 604;
-        static public int boardHeight = 831;
+        static public int boardWidth = 200;
+        static public int boardHeight = 480;
+        static public int boardSizeX = 10;
+        static public int boardSizeY = 22;
         
-        static public int blockTextureSize = 10;
+        static public int blockTextureSize = 20;
 
         static public string blockTextureI = "Blocks/BlockI";
         static public string blockTextureJ = "Blocks/BlockJ";
@@ -27,8 +24,5 @@ namespace Tetris
         static public string blockTextureS = "Blocks/BlockS";
         static public string blockTextureT = "Blocks/BlockT";
         static public string blockTextureZ = "Blocks/BlockZ";
-
-
-
     }
 }

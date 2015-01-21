@@ -30,9 +30,9 @@ namespace Tetris.Piece
         {
             Shape = this.getInitShape();
             setBlocks();
-            //init the piece outside the board
-            X_axis = 4;
-            Y_axis = -3;
+            
+            X_axis = 0;
+            Y_axis = 0;
         }
 
         public void rotate()

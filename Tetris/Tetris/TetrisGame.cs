@@ -51,23 +51,44 @@ namespace Tetris
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             //Get window size
             _screenWidth = Window.ClientBounds.Width;
             _screenHeight = Window.ClientBounds.Height;
 
             //Test PIECE/SHAPE & BLOCK
             _piece = new Piece.PieceI();
-            _piece.X_axis = 100;
-            _piece.Y_axis = 400;
             foreach (Block.ABlock block in _piece.Blocks)
             {
                 block.Position = new Vector2(Common.boardStartX + _piece.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + _piece.Y_axis + block.Y_axis * Common.blockTextureSize);
-
                 block.LoadContent(Content, block.Texture);
             }
+
+            //TEST BOARD
+            Piece.APiece piece1;
+            piece1 = new Piece.PieceI();
+            piece1.X_axis = 0;
+            piece1.Y_axis = 0;
+            //piece1.X_axis = Common.boardStartX+0*Common.blockTextureSize;
+            //piece1.Y_axis = Common.boardStartY+0*Common.blockTextureSize;
+            foreach (Block.ABlock block in piece1.Blocks)
+            {
+                block.Position = new Vector2(Common.boardStartX + piece1.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + piece1.Y_axis + block.Y_axis * Common.blockTextureSize);
+                block.LoadContent(Content, block.Texture);
+            }
+
+            Piece.APiece piece2;
+            piece2 = new Piece.PieceI();
+            piece2.X_axis = 2;
+            piece2.Y_axis = 1;
+            foreach (Block.ABlock block in piece2.Blocks)
+            {
+                block.Position = new Vector2(Common.boardStartX + piece2.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + piece2.Y_axis + block.Y_axis * Common.blockTextureSize);
+                block.LoadContent(Content, block.Texture);
+            }
+            _board.addPiece(piece1, Content);
+            _board.addPiece(piece2, Content);
             
-            _board.addPiece(_piece, Content);
+            
             base.Initialize();
         }
 
@@ -123,7 +144,7 @@ namespace Tetris
             //DRAW the piece
             foreach(Block.ABlock block in _piece.Blocks)
             {
-                block.Draw(spriteBatch, gameTime);
+                //block.Draw(spriteBatch, gameTime);
             }
 
             //DRAW the board
