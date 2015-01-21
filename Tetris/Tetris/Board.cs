@@ -23,6 +23,7 @@ namespace Tetris
 
         public void addBlock(Block.ABlock block)
         {
+            // Each position is: the board starting position (X or Y) + the piece position in the grid * the size of the sprite
             Blocks[block.X_axis, block.Y_axis] = block;
         }
 
@@ -33,7 +34,7 @@ namespace Tetris
         public void addPiece(Piece.APiece piece, ContentManager content){
             foreach (Block.ABlock block in piece.Blocks)
             {
-                block.LoadContent(content, "BlockI");
+                block.LoadContent(content, "Blocks/BlockI");
                 this.addBlock(block);
             }
         }
