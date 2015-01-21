@@ -47,8 +47,38 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlockI.png">
+    <Compile Include="Blocks\BlockI.png">
       <Name>BlockI</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Blocks\BlockJ.png">
+      <Name>BlockJ</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Blocks\BlockL.png">
+      <Name>BlockL</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Blocks\BlockO.png">
+      <Name>BlockO</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Blocks\BlockS.png">
+      <Name>BlockS</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Blocks\BlockT.png">
+      <Name>BlockT</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Blocks\BlockZ.png">
+      <Name>BlockZ</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

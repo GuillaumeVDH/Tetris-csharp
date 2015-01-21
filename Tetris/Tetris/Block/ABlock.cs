@@ -26,5 +26,7 @@ namespace Tetris.Block
             this.X_axis = x;
             this.Y_axis = y;
         }
+
+        public abstract string Texture { get; set; }
     }
 }

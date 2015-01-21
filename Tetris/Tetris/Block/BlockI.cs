@@ -10,6 +10,10 @@ namespace Tetris.Block
         public BlockI(int x, int y) : base(x , y)
         {
             Index = 4;
+            Texture = Common.blockTextureI;
         }
+
+        public override string Texture { get; set; }
+
     }
 }

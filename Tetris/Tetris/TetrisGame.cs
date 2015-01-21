@@ -19,7 +19,7 @@ namespace Tetris
         //Graphic
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private Piece.PieceI _pieceI;
+        private Piece.PieceI _piece;
 
         //Board
         Board _board;
@@ -32,15 +32,12 @@ namespace Tetris
         private int _screenHeight;
         private int _screenWidth;
 
-        private List<Block.ABlock> _blocks;
-
         public TetrisGame()
         {
             IsFixedTimeStep = false;
             
             graphics = new GraphicsDeviceManager(this);
             graphics.SynchronizeWithVerticalRetrace = false;
-            _blocks = new List<Block.ABlock>();
             _board = new Board();
 
             Content.RootDirectory = "Content";
@@ -60,15 +57,17 @@ namespace Tetris
             _screenHeight = Window.ClientBounds.Height;
 
             //Test PIECE/SHAPE & BLOCK
-            _pieceI = new Piece.PieceI();
-            foreach (Block.ABlock block in _pieceI.Blocks)
+            _piece = new Piece.PieceI();
+            _piece.X_axis = 100;
+            _piece.Y_axis = 400;
+            foreach (Block.ABlock block in _piece.Blocks)
             {
-                block.Position = new Vector2(Common.boardStartX + block.X_axis*10, Common.boardStartY + block.Y_axis*10);
-                block.LoadContent(Content, "BlockI");
-                _blocks.Add(block);
-            }
-            _board.addPiece(_pieceI, Content);
+                block.Position = new Vector2(Common.boardStartX + _piece.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + _piece.Y_axis + block.Y_axis * Common.blockTextureSize);
 
+                block.LoadContent(Content, block.Texture);
+            }
+            
+            _board.addPiece(_piece, Content);
             base.Initialize();
         }
 
@@ -120,61 +119,18 @@ namespace Tetris
             GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            //TODO DRAW
             
-            foreach(Block.ABlock block in _blocks)
+            //DRAW the piece
+            foreach(Block.ABlock block in _piece.Blocks)
             {
-                //block.Draw(spriteBatch, gameTime);
+                block.Draw(spriteBatch, gameTime);
             }
+
+            //DRAW the board
             _board.drawBoard(spriteBatch, gameTime);
 
             spriteBatch.End();
             base.Draw(gameTime);
-        }
-
-
-
-
-        /// <summary>
-        /// Determines if there is overlap of the non-transparent pixels
-        /// between two sprites.
-        /// </summary>
-        /// <param name="rectangleA">Bounding rectangle of the first sprite</param>
-        /// <param name="dataA">Pixel data of the first sprite</param>
-        /// <param name="rectangleB">Bouding rectangle of the second sprite</param>
-        /// <param name="dataB">Pixel data of the second sprite</param>
-        /// <returns>True if non-transparent pixels overlap; false otherwise</returns>
-        static bool IntersectPixels(Rectangle rectangleA, Color[] dataA,
-                                    Rectangle rectangleB, Color[] dataB)
-        {
-            // Find the bounds of the rectangle intersection
-            int top = Math.Max(rectangleA.Top, rectangleB.Top);
-            int bottom = Math.Min(rectangleA.Bottom, rectangleB.Bottom);
-            int left = Math.Max(rectangleA.Left, rectangleB.Left);
-            int right = Math.Min(rectangleA.Right, rectangleB.Right);
-
-            // Check every point within the intersection bounds
-            for (int y = top; y < bottom; y++)
-            {
-                for (int x = left; x < right; x++)
-                {
-                    // Get the color of both pixels at this point
-                    Color colorA = dataA[(x - rectangleA.Left) +
-                                         (y - rectangleA.Top) * rectangleA.Width];
-                    Color colorB = dataB[(x - rectangleB.Left) +
-                                         (y - rectangleB.Top) * rectangleB.Width];
-
-                    // If both pixels are not completely transparent,
-                    if (colorA.A != 0 && colorB.A != 0)
-                    {
-                        // then an intersection has been found
-                        return true;
-                    }
-                }
-            }
-
-            // No intersection found
-            return false;
         }
 
     }
