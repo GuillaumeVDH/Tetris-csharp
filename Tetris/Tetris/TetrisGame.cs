@@ -141,6 +141,11 @@ namespace Tetris
             {
                 _board.addPiece(_piece, Content);
                 _piece = new Piece.PieceI();
+                foreach (Block.ABlock block in _piece.Blocks)
+                {
+                    block.Position = new Vector2(Common.boardStartX + _piece.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + _piece.Y_axis + block.Y_axis * Common.blockTextureSize);
+                    block.LoadContent(Content, block.Texture);
+                }
             }
             _previousKeyboardState = _keyboardState;
 
