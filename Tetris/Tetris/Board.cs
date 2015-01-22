@@ -26,14 +26,14 @@ namespace Tetris
             if ((piece_x + block.X_axis >= 0 && piece_x + block.X_axis <= Common.boardSizeX) && (piece_y + block.Y_axis >= 0 && piece_y + block.Y_axis <= Common.boardSizeY))
                 Blocks[piece_x + block.X_axis, piece_y + block.Y_axis] = block;
             else
-                throw new Exception("AddBlock - Out of bounds coordinates (x/y):" + piece_x + block.X_axis + "/" + piece_y + block.Y_axis);
+                throw new Exception("AddBlock - Out of bounds coordinates (x/y):" + (piece_x + block.X_axis) + "/" + (piece_y + block.Y_axis));
         }
 
         private void removeBlock(Block.ABlock block, int piece_x, int piece_y){
             if ((piece_x + block.X_axis >= 0 && piece_x + block.X_axis <= Common.boardSizeX) && (piece_y + block.Y_axis >= 0 && piece_y + block.Y_axis <= Common.boardSizeY))
                 Blocks[piece_x + block.X_axis, piece_y + block.Y_axis] = null;
             else
-                throw new Exception("removeBlock - Out of bounds coordinates (x/y):" + piece_x + block.X_axis + "/" + piece_y + block.Y_axis);
+                throw new Exception("removeBlock - Out of bounds coordinates (x/y):" + (piece_x + block.X_axis) + "/" + (piece_y + block.Y_axis));
         }
 
         public void addPiece(Piece.APiece piece, ContentManager content) {

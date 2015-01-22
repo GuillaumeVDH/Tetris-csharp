@@ -40,6 +40,9 @@ namespace Tetris
             IsFixedTimeStep = true;
             
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = Common.screenWidth;
+            graphics.PreferredBackBufferHeight = Common.screenHeight;
+            graphics.ApplyChanges();
             graphics.SynchronizeWithVerticalRetrace = false;
             _board = new Board();
 
@@ -72,8 +75,8 @@ namespace Tetris
             //TEST BOARD
             Piece.APiece piece1;
             piece1 = new Piece.PieceI();
-            piece1.X_axis = 0;
-            piece1.Y_axis = 0;
+            piece1.X_axis = 3;
+            piece1.Y_axis = 3;
 
             foreach (Block.ABlock block in piece1.Blocks)
             {
@@ -83,8 +86,8 @@ namespace Tetris
 
             Piece.APiece piece2;
             piece2 = new Piece.PieceI();
-            piece2.X_axis = 2;
-            piece2.Y_axis = 1;
+            piece2.X_axis = 5;
+            piece2.Y_axis = 20;
             foreach (Block.ABlock block in piece2.Blocks)
             {
                 block.Position = new Vector2(Common.boardStartX + piece2.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + piece2.Y_axis + block.Y_axis * Common.blockTextureSize);
@@ -159,7 +162,7 @@ namespace Tetris
             }
 
             //DRAW the board
-            //_board.drawBoard(spriteBatch, gameTime);
+            _board.drawBoard(spriteBatch, gameTime);
 
             spriteBatch.End();
             base.Draw(gameTime);
