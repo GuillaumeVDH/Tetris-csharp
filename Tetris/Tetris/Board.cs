@@ -13,7 +13,23 @@ namespace Tetris
     {
         public Board()
         {
-            Blocks = new ABlock[Common.boardSizeX,Common.boardSizeY];
+            Width = Common.boardSizeX;
+            Height = Common.boardSizeY;
+            Blocks = new ABlock[Height,Width];
+            for (int i = 0; i < Height; i++)
+            {
+                for (int j = 0; j < Width; j++)
+                {
+                    if (j == 0 || j == Width - 1 || i == Height - 1)
+                    {
+                        Blocks[i, j] = new BlockFixed(i, j);
+                    }
+                    else
+                    {
+                        Blocks[i, j] = new BlockEmpty(i, j);
+                    }
+                }
+            }
         }
 
         public int Width { get; set; }
@@ -162,6 +178,26 @@ namespace Tetris
                     }
                 }
             }
+        }
+
+        public bool canRotate(Piece.APiece piece)
+        {
+            Piece.APiece pieceTemp = piece;
+            bool result = true;
+
+            pieceTemp.rotate();
+            foreach(Block.ABlock block in pieceTemp.Blocks ){
+                if(Blocks[pieceTemp.X_axis + block.X_axis, pieceTemp.Y_axis + block.Y_axis].Index != 0){
+                    result = false;
+                }
+            }
+
+            return result;
+        }
+
+        public void print()
+        {
+            Utils.TabUtils.print<Block.ABlock>(Blocks);
         }
 
     }

@@ -94,7 +94,7 @@ namespace Tetris.Utils
             return count;
         }
 
-        internal static void print(int[,] tab)
+        internal static void print<T>(T[,] tab)
         {
             if (tab.Rank != 2)
             {

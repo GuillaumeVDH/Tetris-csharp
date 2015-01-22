@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Tetris.Block
 {
-    class BlockI : ABlock
+    class BlockFixed : ABlock
     {
-        public BlockI(int x, int y) : base(x , y)
+        public BlockFixed(int x, int y) : base(x , y)
         {
-            Index = 4;
-            Texture = Common.blockTextureI;
+            Index = 1;
         }
+
         public override string Texture { get; set; }
     }
 }

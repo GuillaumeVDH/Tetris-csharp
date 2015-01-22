@@ -28,5 +28,10 @@ namespace Tetris.Block
         }
 
         public abstract string Texture { get; set; }
+
+        public override string ToString()
+        {
+            return Index.ToString();
+        }
     }
 }

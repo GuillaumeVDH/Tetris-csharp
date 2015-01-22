@@ -39,6 +39,7 @@ namespace Tetris
             graphics = new GraphicsDeviceManager(this);
             graphics.SynchronizeWithVerticalRetrace = false;
             _board = new Board();
+            _board.print();
 
             Content.RootDirectory = "Content";
         }
@@ -66,6 +67,7 @@ namespace Tetris
             //TEST BOARD
             Piece.APiece piece1;
             piece1 = new Piece.PieceI();
+            piece1.print();
             piece1.X_axis = 0;
             piece1.Y_axis = 0;
             //piece1.X_axis = Common.boardStartX+0*Common.blockTextureSize;
