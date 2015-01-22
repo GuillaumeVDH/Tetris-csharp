@@ -7,7 +7,9 @@ namespace Tetris
 {
     class Common
     {
-        static public int boardStartX = 100; //The start position - in pixel - of the board for the Y axis
+        static public int screenWidth = 600;
+        static public int screenHeight = 600;
+        static public int boardStartX = 40; //The start position - in pixel - of the board for the Y axis
         static public int boardStartY = 40; //The start position - in pixel - of the board for the Y axis
         static public int boardWidth = 200; //The width - in pixel - of the board for the Y axis
         static public int boardHeight = 480; //The height - in pixel - of the board for the Y axis
@@ -24,5 +26,7 @@ namespace Tetris
         static public string blockTextureS = "Blocks/BlockS";
         static public string blockTextureT = "Blocks/BlockT";
         static public string blockTextureZ = "Blocks/BlockZ";
+
+        static public string backgroundTexture = "background";
     }
 }

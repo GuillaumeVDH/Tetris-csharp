@@ -19,6 +19,8 @@ namespace Tetris
         //Graphic
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        private Texture2D _background;
         private Piece.PieceI _piece;
 
         //Board
@@ -26,6 +28,7 @@ namespace Tetris
 
         //Player
         private KeyboardState _keyboardState;
+        private KeyboardState _previousKeyboardState;
         private MouseState _mouseState;
 
         //Screen
@@ -34,9 +37,12 @@ namespace Tetris
 
         public TetrisGame()
         {
-            IsFixedTimeStep = false;
+            IsFixedTimeStep = true;
             
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = Common.screenWidth;
+            graphics.PreferredBackBufferHeight = Common.screenHeight;
+            graphics.ApplyChanges();
             graphics.SynchronizeWithVerticalRetrace = false;
             _board = new Board();
             _board.print();
@@ -56,11 +62,14 @@ namespace Tetris
             _screenWidth = Window.ClientBounds.Width;
             _screenHeight = Window.ClientBounds.Height;
 
+            
+            _background = Content.Load<Texture2D>(Common.backgroundTexture);
+
             //Test PIECE/SHAPE & BLOCK
             _piece = new Piece.PieceI();
             foreach (Block.ABlock block in _piece.Blocks)
             {
-                block.Position = new Vector2(Common.boardStartX + _piece.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + _piece.Y_axis + block.Y_axis * Common.blockTextureSize);
+                block.Position = new Vector2(Common.boardStartX + (_piece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + (_piece.Y_axis + block.Y_axis) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
 
@@ -80,8 +89,8 @@ namespace Tetris
 
             Piece.APiece piece2;
             piece2 = new Piece.PieceI();
-            piece2.X_axis = 2;
-            piece2.Y_axis = 1;
+            piece2.X_axis = 5;
+            piece2.Y_axis = 20;
             foreach (Block.ABlock block in piece2.Blocks)
             {
                 block.Position = new Vector2(Common.boardStartX + piece2.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + piece2.Y_axis + block.Y_axis * Common.blockTextureSize);
@@ -89,7 +98,6 @@ namespace Tetris
             }
             _board.addPiece(piece1, Content);
             _board.addPiece(piece2, Content);
-            
             
             base.Initialize();
         }
@@ -120,15 +128,29 @@ namespace Tetris
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // TODO: Add your update logic 
             _keyboardState = Keyboard.GetState();
             _mouseState = Mouse.GetState();
 
-            // Allows the game to exit
-            if (_keyboardState.IsKeyDown(Keys.Escape))
-            {
+            //Player interactions
+            if (_keyboardState.IsKeyDown(Keys.Down) && _previousKeyboardState.IsKeyDown(Keys.Down))
+                _piece.moveDown(Content);
+            else if (_keyboardState.IsKeyDown(Keys.Left) && _previousKeyboardState.IsKeyDown(Keys.Left))
+                _piece.moveLeft(Content);
+            else if (_keyboardState.IsKeyDown(Keys.Right) && _previousKeyboardState.IsKeyDown(Keys.Right))
+                _piece.moveRight(Content);
+            else if (_keyboardState.IsKeyDown(Keys.Escape))
                 this.Exit();
+            else if (_keyboardState.IsKeyDown(Keys.Space))
+            {
+                _board.addPiece(_piece, Content);
+                _piece = new Piece.PieceI();
+                foreach (Block.ABlock block in _piece.Blocks)
+            {
+                    block.Position = new Vector2(Common.boardStartX + _piece.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + _piece.Y_axis + block.Y_axis * Common.blockTextureSize);
+                    block.LoadContent(Content, block.Texture);
+                }
             }
+            _previousKeyboardState = _keyboardState;
 
             base.Update(gameTime);
         }
@@ -139,14 +161,12 @@ namespace Tetris
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
-            // TODO: Add your drawing code here
             spriteBatch.Begin();
-            
+            spriteBatch.Draw(_background, Vector2.Zero, Color.White);
             //DRAW the piece
             foreach(Block.ABlock block in _piece.Blocks)
             {
-                //block.Draw(spriteBatch, gameTime);
+                block.Draw(spriteBatch, gameTime);
             }
 
             //DRAW the board

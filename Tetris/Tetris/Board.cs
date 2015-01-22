@@ -42,14 +42,14 @@ namespace Tetris
             if ((piece_x + block.X_axis >= 0 && piece_x + block.X_axis <= Common.boardSizeX) && (piece_y + block.Y_axis >= 0 && piece_y + block.Y_axis <= Common.boardSizeY))
                 Blocks[piece_x + block.X_axis, piece_y + block.Y_axis] = block;
             else
-                throw new Exception("AddBlock - Out of bounds coordinates (x/y):" + piece_x + block.X_axis + "/" + piece_y + block.Y_axis);
+                throw new Exception("AddBlock - Out of bounds coordinates (x/y):" + (piece_x + block.X_axis) + "/" + (piece_y + block.Y_axis));
         }
 
         private void removeBlock(Block.ABlock block, int piece_x, int piece_y){
             if ((piece_x + block.X_axis >= 0 && piece_x + block.X_axis <= Common.boardSizeX) && (piece_y + block.Y_axis >= 0 && piece_y + block.Y_axis <= Common.boardSizeY))
                 Blocks[piece_x + block.X_axis, piece_y + block.Y_axis] = null;
             else
-                throw new Exception("removeBlock - Out of bounds coordinates (x/y):" + piece_x + block.X_axis + "/" + piece_y + block.Y_axis);
+                throw new Exception("removeBlock - Out of bounds coordinates (x/y):" + (piece_x + block.X_axis) + "/" + (piece_y + block.Y_axis));
         }
 
         public void addPiece(Piece.APiece piece, ContentManager content) {
@@ -58,7 +58,7 @@ namespace Tetris
                 try {
                     this.addBlock(block, piece.X_axis, piece.Y_axis);
                     block.Position = new Vector2(Common.boardStartX + (piece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + (piece.Y_axis + block.Y_axis) * Common.blockTextureSize);
-                    block.LoadContent(content, block.Texture);
+                    //block.LoadContent(content, block.Texture); //TODO may fucked up things later as piece should already be loaded before being added to board.
                 }
                 catch (Exception e) {
                     Console.WriteLine(e.Message);
@@ -94,7 +94,7 @@ namespace Tetris
                     }
                     j++;
                 }
-            }
+            }   
 
             return result;
         }
