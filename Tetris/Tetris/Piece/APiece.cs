@@ -20,9 +20,8 @@ namespace Tetris.Piece
             get { return x_axis; }
             set 
             {
-                if(value >= 0 && value <= Common.boardSizeX)
+                if(value >= 0 && value <= Common.boardSizeX-4)
                     x_axis = value;
-                Console.WriteLine("Val: " + value);
             }
         }
         private int y_axis;
