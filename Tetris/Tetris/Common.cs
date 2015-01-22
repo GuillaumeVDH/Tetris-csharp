@@ -14,7 +14,7 @@ namespace Tetris
         static public int boardWidth = 200; //The width - in pixel - of the board for the Y axis
         static public int boardHeight = 480; //The height - in pixel - of the board for the Y axis
         static public int boardSizeX = 12; //The size - in case - of the board for the X axis
-        static public int boardSizeY = 22; //The size - in case - of the board for the Y axis
+        static public int boardSizeY = 25; //The size - in case - of the board for the Y axis
         
         static public int blockTextureSize = 20; //The size - in pixel - of a block texture (X == Y)
 

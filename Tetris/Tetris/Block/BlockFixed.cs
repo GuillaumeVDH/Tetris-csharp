@@ -10,6 +10,7 @@ namespace Tetris.Block
         public BlockFixed(int x, int y) : base(x , y)
         {
             Index = 1;
+            Texture = null;
         }
 
         public override string Texture { get; set; }

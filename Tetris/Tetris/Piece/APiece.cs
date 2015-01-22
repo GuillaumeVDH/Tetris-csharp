@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,28 +13,26 @@ namespace Tetris.Piece
         public Shape.AShape Shape {get; set;}
 
         protected List<Block.ABlock> blocks;
-        private int x_axis;
 
-        public int X_axis
-        {
-            get { return x_axis; }
-            set { x_axis = value; }
-        }
-        private int y_axis;
+        public int X_axis { get; set; }
+        public int Y_axis { get; set; }
 
-        public int Y_axis
+        protected APiece()
         {
-            get { return y_axis; }
-            set { y_axis = value; }
+            Shape = this.getInitShape();
+            setBlocks();
+
+            X_axis = 0;
+            Y_axis = 0;
         }
 
-        public APiece()
+        protected APiece(int x, int y) : this()
         {
             Shape = this.getInitShape();
             setBlocks();
             
-            X_axis = 0;
-            Y_axis = 0;
+            X_axis = x;
+            Y_axis = y;
         }
 
         public void rotate()
@@ -43,19 +43,30 @@ namespace Tetris.Piece
 
         abstract protected Shape.AShape getInitShape();
 
-        public void moveRight()
+        public void moveRight(ContentManager content)
         {
-            this.x_axis += 1;
+            X_axis += 1;
+            this.updatePiece(content);
         }
 
-        public void moveLeft()
+        public void moveLeft(ContentManager content)
         {
-            this.x_axis -= 1;
+            X_axis -= 1;
+            this.updatePiece(content);
         }
 
-        public void meveDown()
+        public void moveDown(ContentManager content)
         {
-            this.y_axis += 1;
+            this.Y_axis += 1;
+            this.updatePiece(content);
+        }
+
+        private void updatePiece(ContentManager content)
+        {
+            foreach (Block.ABlock block in this.Blocks)
+            {
+                block.Position = new Vector2(Common.boardStartX + (this.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + (this.Y_axis - block.Y_axis) * Common.blockTextureSize);
+            }
         }
 
         public void print(){
@@ -67,13 +78,13 @@ namespace Tetris.Piece
         protected void setBlocks()
         {
             blocks = new List<Block.ABlock>();
-            for (int i = 0; i < Shape.Shape.GetLength(0); i++)
+            for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < Shape.Shape.GetLength(1); j++)
+                for (int j = 0; j < 4; j++)
                 {
                     if (Shape.Shape[i, j] > 0)
                     {
-                        blocks.Add(createBlock(i, j));
+                        blocks.Add(createBlock(j, -i));
                     }
                 }
             }

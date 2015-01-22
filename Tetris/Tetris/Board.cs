@@ -40,14 +40,14 @@ namespace Tetris
         public void addBlock(Block.ABlock block, int piece_x, int piece_y)
         {
             if ((piece_x + block.X_axis >= 0 && piece_x + block.X_axis <= Common.boardSizeX) && (piece_y + block.Y_axis >= 0 && piece_y + block.Y_axis <= Common.boardSizeY))
-                Blocks[piece_x + block.X_axis, piece_y + block.Y_axis] = block;
+                Blocks[piece_y + block.Y_axis, piece_x + block.X_axis] = block;
             else
                 throw new Exception("AddBlock - Out of bounds coordinates (x/y):" + (piece_x + block.X_axis) + "/" + (piece_y + block.Y_axis));
         }
 
         private void removeBlock(Block.ABlock block, int piece_x, int piece_y){
             if ((piece_x + block.X_axis >= 0 && piece_x + block.X_axis <= Common.boardSizeX) && (piece_y + block.Y_axis >= 0 && piece_y + block.Y_axis <= Common.boardSizeY))
-                Blocks[piece_x + block.X_axis, piece_y + block.Y_axis] = null;
+                Blocks[piece_y + block.Y_axis, piece_x + block.X_axis] = null;
             else
                 throw new Exception("removeBlock - Out of bounds coordinates (x/y):" + (piece_x + block.X_axis) + "/" + (piece_y + block.Y_axis));
         }
@@ -56,7 +56,7 @@ namespace Tetris
             foreach (Block.ABlock block in piece.Blocks)
             {
                 try {
-                    this.addBlock(block, piece.X_axis, piece.Y_axis);
+                    this.addBlock(block, piece.X_axis + 1, piece.Y_axis);
                     block.Position = new Vector2(Common.boardStartX + (piece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + (piece.Y_axis + block.Y_axis) * Common.blockTextureSize);
                     //block.LoadContent(content, block.Texture); //TODO may fucked up things later as piece should already be loaded before being added to board.
                 }
@@ -87,13 +87,13 @@ namespace Tetris
                     }
                     if (sum != 0)
                     {
-                        if (Blocks[piece.Y_axis + i + 1, piece.X_axis + j].Index != 0)
+                        if (Blocks[piece.Y_axis - 3 + i, piece.X_axis + j].Index != 0)
                         {
                             result = false;
                         }
                     }
-                    j++;
                 }
+                j++;
             }   
 
             return result;
@@ -172,7 +172,7 @@ namespace Tetris
             {
                 for (int y = 0; y < Blocks.GetUpperBound(1); y++)
                 {
-                    if (Blocks[x, y] != null)
+                    if (Blocks[x, y] != null && Blocks[x, y].Texture != null)
                     {
                         Blocks[x, y].Draw(spriteBatch, gameTime);
                     }

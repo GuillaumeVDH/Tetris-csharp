@@ -75,10 +75,8 @@ namespace Tetris
 
             //TEST BOARD
             Piece.APiece piece1;
-            piece1 = new Piece.PieceI();
+            piece1 = new Piece.PieceI(1, 3);
             piece1.print();
-            piece1.X_axis = 0;
-            piece1.Y_axis = 0;
             //piece1.X_axis = Common.boardStartX+0*Common.blockTextureSize;
             //piece1.Y_axis = Common.boardStartY+0*Common.blockTextureSize;
             foreach (Block.ABlock block in piece1.Blocks)
@@ -88,9 +86,7 @@ namespace Tetris
             }
 
             Piece.APiece piece2;
-            piece2 = new Piece.PieceI();
-            piece2.X_axis = 5;
-            piece2.Y_axis = 20;
+            piece2 = new Piece.PieceI(5,20);
             foreach (Block.ABlock block in piece2.Blocks)
             {
                 block.Position = new Vector2(Common.boardStartX + piece2.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + piece2.Y_axis + block.Y_axis * Common.blockTextureSize);
@@ -98,6 +94,13 @@ namespace Tetris
             }
             _board.addPiece(piece1, Content);
             _board.addPiece(piece2, Content);
+            _board.print();
+            while (_board.canMoveDown(piece2))
+            {
+                piece2.moveDown(Content);
+            }
+
+            _board.print();
             
             base.Initialize();
         }

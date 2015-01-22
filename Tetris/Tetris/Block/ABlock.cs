@@ -21,7 +21,7 @@ namespace Tetris.Block
             set;
         }
 
-        public ABlock(int x, int y)
+        protected ABlock(int x, int y)
         {
             this.X_axis = x;
             this.Y_axis = y;
