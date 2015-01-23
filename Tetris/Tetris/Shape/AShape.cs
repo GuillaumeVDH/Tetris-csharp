@@ -19,7 +19,8 @@ namespace Tetris.Shape
 
         public void rotate()
         {
-            this.print();
+            Shape = Utils.TabUtils.rotate(Shape);
+            placeInCorner();
         }
 
         public void placeInCorner()

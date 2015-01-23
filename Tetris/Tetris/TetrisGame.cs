@@ -87,6 +87,7 @@ namespace Tetris
 
             Piece.APiece piece2;
             piece2 = new Piece.PieceI(5,20);
+            piece2.rotate();
             foreach (Block.ABlock block in piece2.Blocks)
             {
                 block.Position = new Vector2(Common.boardStartX + piece2.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + piece2.Y_axis + block.Y_axis * Common.blockTextureSize);
@@ -98,8 +99,13 @@ namespace Tetris
             while (_board.canMoveDown(piece2))
             {
                 piece2.moveDown(Content);
+                _board.reset();
+                _board.addPiece(piece2, Content);
+                _board.print();
             }
 
+            _board.reset();
+            _board.addPiece(piece2, Content);
             _board.print();
             
             base.Initialize();

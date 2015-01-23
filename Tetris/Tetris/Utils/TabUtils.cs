@@ -7,7 +7,7 @@ namespace Tetris.Utils
 {
     class TabUtils
     {
-        internal static void rotate(ref int[,] tab)
+        internal static int[,] rotate(int[,] tab)
         {
             if (tab.Rank != 2)
             {
@@ -21,23 +21,16 @@ namespace Tetris.Utils
 
             int[,] temp = new int[tab.GetLength(0), tab.GetLength(1)];
 
-            //copy the array
-            for (int i = 0; i < tab.GetLength(0); i++)
-            {
-                for (int j = 0; j < tab.GetLength(1); j++)
-                {
-                    temp[i,j] = tab[i,j];
-                }
-            }
-
             //rotate the array
             for (int i = 0; i < tab.GetLength(0); i++)
             {
                 for (int j = 0; j < tab.GetLength(1); j++)
                 {
-                    tab[i, j] = temp[temp.GetLength(1) - 1 - j, i];
+                    temp[i, j] = tab[tab.GetLength(1) - 1 - j, i];
                 }
             }
+
+            return temp;
         }
 
         internal static int countEmptyColumns(int[,] tab)
