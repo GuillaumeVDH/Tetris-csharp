@@ -16,6 +16,11 @@ namespace Tetris
             Width = Common.boardSizeX;
             Height = Common.boardSizeY;
             Blocks = new ABlock[Height,Width];
+            reset();
+        }
+
+        public void reset()
+        {
             for (int i = 0; i < Height; i++)
             {
                 for (int j = 0; j < Width; j++)
@@ -39,8 +44,8 @@ namespace Tetris
 
         public void addBlock(Block.ABlock block, int piece_x, int piece_y)
         {
-            if ((piece_x + block.X_axis >= 0 && piece_x + block.X_axis <= Common.boardSizeX) && (piece_y + block.Y_axis >= 0 && piece_y + block.Y_axis <= Common.boardSizeY))
-                Blocks[piece_y + block.Y_axis, piece_x + block.X_axis] = block;
+            if ((piece_x + block.X_axis >= 1 && piece_x + block.X_axis <= Common.boardSizeX - 1) && (piece_y + block.Y_axis - 3 >= 0 && piece_y + block.Y_axis - 3 <= Common.boardSizeY - 1))
+                Blocks[piece_y + block.Y_axis - 3, piece_x + block.X_axis] = block;
             else
                 throw new Exception("AddBlock - Out of bounds coordinates (x/y):" + (piece_x + block.X_axis) + "/" + (piece_y + block.Y_axis));
         }
@@ -87,13 +92,13 @@ namespace Tetris
                     }
                     if (sum != 0)
                     {
-                        if (Blocks[piece.Y_axis - 3 + i, piece.X_axis + j].Index != 0)
+                        if (Blocks[piece.Y_axis - 3 + i + 1, piece.X_axis + j].Index != 0)
                         {
                             result = false;
                         }
                     }
+                    j++;
                 }
-                j++;
             }   
 
             return result;
@@ -121,7 +126,7 @@ namespace Tetris
                     }
                     if (sum != 0)
                     {
-                        if(Blocks[piece.Y_axis + i, piece.X_axis + j + 1].Index != 0)
+                        if(Blocks[piece.Y_axis + i - 3, piece.X_axis + j + 1].Index != 0)
                         {
                             result = false;
                         }
@@ -139,7 +144,7 @@ namespace Tetris
 
             while (i < 4 && result)
             {
-                j = 3;
+                j = 0;
                 sum = 0;
 
                 while (sum == 0 && j < 4 && result)
@@ -154,7 +159,7 @@ namespace Tetris
                     }
                     if (sum != 0)
                     {
-                        if (Blocks[piece.Y_axis + i, piece.X_axis + j - 1].Index != 0)
+                        if (Blocks[piece.Y_axis + i - 3, piece.X_axis + j - 1].Index != 0)
                         {
                             result = false;
                         }
@@ -187,7 +192,8 @@ namespace Tetris
 
             pieceTemp.rotate();
             foreach(Block.ABlock block in pieceTemp.Blocks ){
-                if(Blocks[pieceTemp.X_axis + block.X_axis, pieceTemp.Y_axis + block.Y_axis].Index != 0){
+                if (Blocks[pieceTemp.Y_axis + block.Y_axis, pieceTemp.X_axis + block.X_axis].Index != 0)
+                {
                     result = false;
                 }
             }
