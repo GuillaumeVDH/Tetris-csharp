@@ -200,7 +200,6 @@ namespace Tetris
 
             return result;
         }
-
         public void print()
         {
             Utils.TabUtils.print<Block.ABlock>(Blocks);

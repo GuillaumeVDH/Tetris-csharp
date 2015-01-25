@@ -69,12 +69,9 @@ namespace Tetris
             _piece = new Piece.PieceI(0,0);
             foreach (Block.ABlock block in _piece.Blocks)
             {
-                Console.WriteLine("BI1:" + (_piece.X_axis - block.X_axis) + "/" + (_piece.Y_axis - block.Y_axis));
-                block.Position = new Vector2(Common.boardStartX + (_piece.X_axis - block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_piece.Y_axis - block.Y_axis)+3) * Common.blockTextureSize);
+                block.Position = new Vector2(Common.boardStartX + (_piece.X_axis - block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_piece.Y_axis - block.Y_axis) + 3) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
-                Console.WriteLine("BI:" + block.Position);
             }
-
             //TEST BOARD
             /*
             Piece.APiece piece1;
@@ -187,7 +184,7 @@ namespace Tetris
             {
                 block.Draw(spriteBatch, gameTime);
             }
-
+            
             //DRAW the board
             _board.drawBoard(spriteBatch, gameTime);
 
