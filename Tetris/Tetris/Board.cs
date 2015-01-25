@@ -42,10 +42,10 @@ namespace Tetris
 
         public ABlock[,] Blocks { get; set; }
 
-        public void addBlock(Block.ABlock block, int piece_x, int piece_y)
+        private void addBlock(Block.ABlock block, int piece_x, int piece_y)
         {
-            if ((piece_x + block.X_axis >= 1 && piece_x + block.X_axis <= Common.boardSizeX - 1) && (piece_y + block.Y_axis - 3 >= 0 && piece_y + block.Y_axis - 3 <= Common.boardSizeY - 1))
-                Blocks[piece_y + block.Y_axis - 3, piece_x + block.X_axis] = block;
+            if ((piece_x + block.X_axis >= 0 && piece_x + block.X_axis <= Common.boardSizeX-1) && (piece_y + block.Y_axis >= 0 && piece_y + block.Y_axis <= Common.boardSizeY - 1))
+                Blocks[(piece_y + block.Y_axis)+4, (piece_x + block.X_axis)+1] = block;
             else
                 throw new Exception("AddBlock - Out of bounds coordinates (x/y):" + (piece_x + block.X_axis) + "/" + (piece_y + block.Y_axis));
         }
@@ -58,12 +58,12 @@ namespace Tetris
         }
 
         public void addPiece(Piece.APiece piece, ContentManager content) {
+            Console.WriteLine("AP:" + piece.X_axis + "/" + piece.Y_axis);
             foreach (Block.ABlock block in piece.Blocks)
             {
                 try {
-                    this.addBlock(block, piece.X_axis + 1, piece.Y_axis);
-                    block.Position = new Vector2(Common.boardStartX + (piece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + (piece.Y_axis + block.Y_axis) * Common.blockTextureSize);
-                    //block.LoadContent(content, block.Texture); //TODO may fucked up things later as piece should already be loaded before being added to board.
+                    this.addBlock(block, piece.X_axis, piece.Y_axis);
+                    block.Position = new Vector2(Common.boardStartX + ((piece.X_axis - block.X_axis)) * Common.blockTextureSize, Common.boardStartY + ((piece.Y_axis - block.Y_axis)+3) * Common.blockTextureSize);
                 }
                 catch (Exception e) {
                     Console.WriteLine(e.Message);

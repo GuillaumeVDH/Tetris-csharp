@@ -66,35 +66,42 @@ namespace Tetris
             _background = Content.Load<Texture2D>(Common.backgroundTexture);
 
             //Test PIECE/SHAPE & BLOCK
-            _piece = new Piece.PieceI();
+            _piece = new Piece.PieceI(0,0);
             foreach (Block.ABlock block in _piece.Blocks)
             {
-                block.Position = new Vector2(Common.boardStartX + (_piece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + (_piece.Y_axis + block.Y_axis) * Common.blockTextureSize);
+                Console.WriteLine("BI1:" + (_piece.X_axis - block.X_axis) + "/" + (_piece.Y_axis - block.Y_axis));
+                block.Position = new Vector2(Common.boardStartX + (_piece.X_axis - block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_piece.Y_axis - block.Y_axis)+3) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
+                Console.WriteLine("BI:" + block.Position);
             }
 
             //TEST BOARD
+            /*
             Piece.APiece piece1;
-            piece1 = new Piece.PieceI(1, 3);
+            piece1 = new Piece.PieceI(8, 4);
             piece1.print();
             //piece1.X_axis = Common.boardStartX+0*Common.blockTextureSize;
             //piece1.Y_axis = Common.boardStartY+0*Common.blockTextureSize;
             foreach (Block.ABlock block in piece1.Blocks)
             {
-                block.Position = new Vector2(Common.boardStartX + piece1.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + piece1.Y_axis + block.Y_axis * Common.blockTextureSize);
+                Console.WriteLine("BIP1:" + (piece1.X_axis + "+" + block.X_axis) + "/" + (piece1.Y_axis + "+" + block.Y_axis));
+                block.Position = new Vector2(Common.boardStartX + (piece1.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + (piece1.Y_axis + block.Y_axis) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
-
+            _board.addPiece(piece1, Content);
+            _board.print();
+            
             Piece.APiece piece2;
-            piece2 = new Piece.PieceI(5,20);
+            piece2 = new Piece.PieceI(5,10);
             piece2.rotate();
             foreach (Block.ABlock block in piece2.Blocks)
             {
                 block.Position = new Vector2(Common.boardStartX + piece2.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + piece2.Y_axis + block.Y_axis * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
-            _board.addPiece(piece1, Content);
             _board.addPiece(piece2, Content);
+            */
+            /*
             _board.print();
             while (_board.canMoveDown(piece2))
             {
@@ -107,7 +114,7 @@ namespace Tetris
             _board.reset();
             _board.addPiece(piece2, Content);
             _board.print();
-            
+            */
             base.Initialize();
         }
 
@@ -141,25 +148,28 @@ namespace Tetris
             _mouseState = Mouse.GetState();
 
             //Player interactions
-            if (_keyboardState.IsKeyDown(Keys.Down) && _previousKeyboardState.IsKeyDown(Keys.Down))
+            if (_keyboardState.IsKeyDown(Keys.Down) && !_previousKeyboardState.IsKeyDown(Keys.Down))
                 _piece.moveDown(Content);
-            else if (_keyboardState.IsKeyDown(Keys.Left) && _previousKeyboardState.IsKeyDown(Keys.Left))
+            else if (_keyboardState.IsKeyDown(Keys.Left) && !_previousKeyboardState.IsKeyDown(Keys.Left))
                 _piece.moveLeft(Content);
-            else if (_keyboardState.IsKeyDown(Keys.Right) && _previousKeyboardState.IsKeyDown(Keys.Right))
+            else if (_keyboardState.IsKeyDown(Keys.Right) && !_previousKeyboardState.IsKeyDown(Keys.Right))
                 _piece.moveRight(Content);
-            else if (_keyboardState.IsKeyDown(Keys.Escape))
+            else if (_keyboardState.IsKeyDown(Keys.Escape) && !_previousKeyboardState.IsKeyDown(Keys.Escape))
                 this.Exit();
-            else if (_keyboardState.IsKeyDown(Keys.Space))
+            else if (_keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))
             {
                 _board.addPiece(_piece, Content);
-                _piece = new Piece.PieceI();
+                _board.print();
+                _piece = new Piece.PieceI(0,0);
                 foreach (Block.ABlock block in _piece.Blocks)
-            {
-                    block.Position = new Vector2(Common.boardStartX + _piece.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + _piece.Y_axis + block.Y_axis * Common.blockTextureSize);
+                {
+                    block.Position = new Vector2(Common.boardStartX + (_piece.X_axis - block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_piece.Y_axis - block.Y_axis)-4) * Common.blockTextureSize);
                     block.LoadContent(Content, block.Texture);
                 }
             }
             _previousKeyboardState = _keyboardState;
+
+            //Console.WriteLine("P:" + _piece.X_axis + "/" + _piece.Y_axis);
 
             base.Update(gameTime);
         }

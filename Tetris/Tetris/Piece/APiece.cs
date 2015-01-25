@@ -64,10 +64,14 @@ namespace Tetris.Piece
 
         private void updatePiece(ContentManager content)
         {
+            Console.WriteLine("UP:" + (this.X_axis) + "/" + (this.Y_axis));
             foreach (Block.ABlock block in this.Blocks)
             {
-                block.Position = new Vector2(Common.boardStartX + (this.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + (this.Y_axis - block.Y_axis) * Common.blockTextureSize);
+                Console.WriteLine("BU:" + (this.X_axis - block.X_axis) + "/" + (this.Y_axis - block.Y_axis));
+                block.Position = new Vector2(Common.boardStartX + (this.X_axis - block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((this.Y_axis - block.Y_axis)+3) * Common.blockTextureSize);
+                Console.WriteLine("BU-POS:" + block.Position);
             }
+            Console.WriteLine("---");
         }
 
         public void print(){
