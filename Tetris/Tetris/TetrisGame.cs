@@ -21,7 +21,8 @@ namespace Tetris
         SpriteBatch spriteBatch;
 
         private Texture2D _background;
-        private Piece.PieceI _piece;
+        private Piece.PieceI _currentPiece;
+        private Piece.PieceI _nextPiece;
 
         //Board
         Board _board;
@@ -65,17 +66,25 @@ namespace Tetris
             
             _background = Content.Load<Texture2D>(Common.backgroundTexture);
 
-            //Test PIECE/SHAPE & BLOCK
-            _piece = new Piece.PieceI(0,0);
-            foreach (Block.ABlock block in _piece.Blocks)
+            //Init the current piece
+            _currentPiece = new Piece.PieceI(0,0);
+            foreach (Block.ABlock block in _currentPiece.Blocks)
             {
-                block.Position = new Vector2(Common.boardStartX + (_piece.X_axis - block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_piece.Y_axis - block.Y_axis) + 3) * Common.blockTextureSize);
+                block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis - block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis) + 3) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
+            
+            //Init the next piece for preview
+            _nextPiece = new Piece.PieceI(0, 0);
+            foreach (Block.ABlock block in _nextPiece.Blocks)
+            {
+                block.Position = new Vector2(Common.previewNextStartX+20 + (_nextPiece.X_axis - block.X_axis) * Common.blockTextureSize, Common.previewNextStartY+20 + ((_nextPiece.Y_axis - block.Y_axis) + 3) * Common.blockTextureSize);
+                block.LoadContent(Content, block.Texture);
+            }
+
             //TEST BOARD
-            /*
             Piece.APiece piece1;
-            piece1 = new Piece.PieceI(8, 4);
+            piece1 = new Piece.PieceI(4, 4);
             piece1.print();
             //piece1.X_axis = Common.boardStartX+0*Common.blockTextureSize;
             //piece1.Y_axis = Common.boardStartY+0*Common.blockTextureSize;
@@ -86,32 +95,7 @@ namespace Tetris
                 block.LoadContent(Content, block.Texture);
             }
             _board.addPiece(piece1, Content);
-            _board.print();
             
-            Piece.APiece piece2;
-            piece2 = new Piece.PieceI(5,10);
-            piece2.rotate();
-            foreach (Block.ABlock block in piece2.Blocks)
-            {
-                block.Position = new Vector2(Common.boardStartX + piece2.X_axis + block.X_axis * Common.blockTextureSize, Common.boardStartY + piece2.Y_axis + block.Y_axis * Common.blockTextureSize);
-                block.LoadContent(Content, block.Texture);
-            }
-            _board.addPiece(piece2, Content);
-            */
-            /*
-            _board.print();
-            while (_board.canMoveDown(piece2))
-            {
-                piece2.moveDown(Content);
-                _board.reset();
-                _board.addPiece(piece2, Content);
-                _board.print();
-            }
-
-            _board.reset();
-            _board.addPiece(piece2, Content);
-            _board.print();
-            */
             base.Initialize();
         }
 
@@ -146,27 +130,28 @@ namespace Tetris
 
             //Player interactions
             if (_keyboardState.IsKeyDown(Keys.Down) && !_previousKeyboardState.IsKeyDown(Keys.Down))
-                _piece.moveDown(Content);
+                _currentPiece.moveDown(Content);
             else if (_keyboardState.IsKeyDown(Keys.Left) && !_previousKeyboardState.IsKeyDown(Keys.Left))
-                _piece.moveLeft(Content);
+                _currentPiece.moveLeft(Content);
             else if (_keyboardState.IsKeyDown(Keys.Right) && !_previousKeyboardState.IsKeyDown(Keys.Right))
-                _piece.moveRight(Content);
-            else if (_keyboardState.IsKeyDown(Keys.Escape) && !_previousKeyboardState.IsKeyDown(Keys.Escape))
+                _currentPiece.moveRight(Content);
+            else if (_keyboardState.IsKeyDown(Keys.Escape))
                 this.Exit();
+            else if (_keyboardState.IsKeyDown(Keys.T) && !_previousKeyboardState.IsKeyDown(Keys.T))
+                _currentPiece.rotate();
             else if (_keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))
             {
-                _board.addPiece(_piece, Content);
+                _board.addPiece(_currentPiece, Content);
                 _board.print();
-                _piece = new Piece.PieceI(0,0);
-                foreach (Block.ABlock block in _piece.Blocks)
+                _currentPiece = new Piece.PieceI(0, 0);
+                foreach (Block.ABlock block in _currentPiece.Blocks)
                 {
-                    block.Position = new Vector2(Common.boardStartX + (_piece.X_axis - block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_piece.Y_axis - block.Y_axis)-4) * Common.blockTextureSize);
+                    block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis - block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis) - 4) * Common.blockTextureSize);
                     block.LoadContent(Content, block.Texture);
                 }
+                //TODO update the next piece preview
             }
             _previousKeyboardState = _keyboardState;
-
-            //Console.WriteLine("P:" + _piece.X_axis + "/" + _piece.Y_axis);
 
             base.Update(gameTime);
         }
@@ -179,8 +164,14 @@ namespace Tetris
         {
             spriteBatch.Begin();
             spriteBatch.Draw(_background, Vector2.Zero, Color.White);
+            //DRAW the next piece preview
+            foreach (Block.ABlock block in _nextPiece.Blocks)
+            {
+                block.Draw(spriteBatch, gameTime);
+            }
+
             //DRAW the piece
-            foreach(Block.ABlock block in _piece.Blocks)
+            foreach(Block.ABlock block in _currentPiece.Blocks)
             {
                 block.Draw(spriteBatch, gameTime);
             }
