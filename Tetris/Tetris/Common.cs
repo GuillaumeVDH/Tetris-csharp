@@ -9,8 +9,8 @@ namespace Tetris
     {
         static public int screenWidth = 600;
         static public int screenHeight = 600;
-        static public int boardStartX = 40; //The start position - in pixel - of the board for the Y axis
-        static public int boardStartY = 40; //The start position - in pixel - of the board for the Y axis
+        static public int boardStartX = 60; //The start position - in pixel - of the board for the Y axis
+        static public int boardStartY = 60; //The start position - in pixel - of the board for the Y axis
         static public int boardWidth = 200; //The width - in pixel - of the board for the Y axis
         static public int boardHeight = 480; //The height - in pixel - of the board for the Y axis
         static public int boardSizeX = 12; //The size - in case - of the board for the X axis
