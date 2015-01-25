@@ -36,6 +36,9 @@ namespace Tetris
         private int _screenHeight;
         private int _screenWidth;
 
+        //Sound
+        private Song _tetrisMusic;
+
         public TetrisGame()
         {
             IsFixedTimeStep = true;
@@ -46,7 +49,6 @@ namespace Tetris
             graphics.ApplyChanges();
             graphics.SynchronizeWithVerticalRetrace = false;
             _board = new Board();
-            _board.print();
 
             Content.RootDirectory = "Content";
         }
@@ -63,8 +65,11 @@ namespace Tetris
             _screenWidth = Window.ClientBounds.Width;
             _screenHeight = Window.ClientBounds.Height;
 
-            
             _background = Content.Load<Texture2D>(Common.backgroundTexture);
+
+            //Init sound background music
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.8f;
 
             //Init the current piece
             _currentPiece = new Piece.PieceI(0,0);
@@ -97,6 +102,7 @@ namespace Tetris
             _board.addPiece(piece1, Content);
             
             base.Initialize();
+            MediaPlayer.Play(_tetrisMusic);
         }
 
         /// <summary>
@@ -107,6 +113,7 @@ namespace Tetris
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            _tetrisMusic = Content.Load<Song>("Tetris");
         }
 
         /// <summary>
