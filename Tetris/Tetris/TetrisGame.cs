@@ -78,7 +78,7 @@ namespace Tetris
             _currentPiece = new Piece.PieceI(0,0);
             foreach (Block.ABlock block in _currentPiece.Blocks)
             {
-                block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis - block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis) + 3) * Common.blockTextureSize);
+                block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis + block.Y_axis) + 3) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
             
@@ -86,20 +86,9 @@ namespace Tetris
             _nextPiece = new Piece.PieceL(0, 0);
             foreach (Block.ABlock block in _nextPiece.Blocks)
             {
-                block.Position = new Vector2(Common.previewNextStartX+50 + (_nextPiece.X_axis - block.X_axis) * Common.blockTextureSize, Common.previewNextStartY+20 + ((_nextPiece.Y_axis - block.Y_axis) + 3) * Common.blockTextureSize);
+                block.Position = new Vector2(Common.previewNextStartX+50 + (_nextPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.previewNextStartY + ((_nextPiece.Y_axis + block.Y_axis)) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
-
-            //TEST BOARD
-            Piece.APiece piece1;
-            piece1 = new Piece.PieceI(4, 4);
-            piece1.print();
-            foreach (Block.ABlock block in piece1.Blocks)
-            {
-                block.Position = new Vector2(Common.boardStartX + (piece1.X_axis - block.X_axis) * Common.blockTextureSize, Common.boardStartY + (piece1.Y_axis - block.Y_axis) * Common.blockTextureSize);
-                block.LoadContent(Content, block.Texture);
-            }
-            _board.addPiece(piece1, Content);
             
             base.Initialize();
             MediaPlayer.Play(_tetrisMusic);
@@ -164,10 +153,12 @@ namespace Tetris
             {
                 _board.addPiece(_currentPiece, Content);
                 _board.print();
-                _currentPiece = new Piece.PieceI(0, 0);
+
+                //_currentPiece = new Piece.PieceL(4,0);
+                this.randomPiece();
                 foreach (Block.ABlock block in _currentPiece.Blocks)
                 {
-                    block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis - block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis) - 4) * Common.blockTextureSize);
+                    block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis + block.Y_axis)) * Common.blockTextureSize);
                     block.LoadContent(Content, block.Texture);
                 }
                 //TODO update the next piece preview
@@ -204,6 +195,27 @@ namespace Tetris
 
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        public void randomPiece()
+        {
+            Random rnd = new Random();
+            int random = rnd.Next(1, 8); // create number between 1 to 7
+            Console.WriteLine("numero de random : " + random);
+            if (random == 1)
+                _currentPiece = new Piece.PieceI(5, 0);
+            else if (random == 2)
+                _currentPiece = new Piece.PieceL(5, 0);
+            else if (random == 3)
+                _currentPiece = new Piece.PieceJ(5, 0);
+            else if (random == 4)
+                _currentPiece = new Piece.PieceO(5, 0);
+            else if (random == 5)
+                _currentPiece = new Piece.PieceS(5, 0);
+            else if (random == 6)
+                _currentPiece = new Piece.PieceT(5, 0);
+            else
+                _currentPiece = new Piece.PieceZ(5, 0);
         }
 
     }

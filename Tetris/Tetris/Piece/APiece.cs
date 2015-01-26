@@ -67,7 +67,7 @@ namespace Tetris.Piece
             Console.WriteLine("UP:" + (this.X_axis) + "/" + (this.Y_axis));
             foreach (Block.ABlock block in this.Blocks)
             {
-                block.Position = new Vector2(Common.boardStartX + (this.X_axis - block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((this.Y_axis - block.Y_axis)+3) * Common.blockTextureSize);
+                block.Position = new Vector2(Common.boardStartX + (this.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((this.Y_axis + block.Y_axis)) * Common.blockTextureSize);
             }
         }
 

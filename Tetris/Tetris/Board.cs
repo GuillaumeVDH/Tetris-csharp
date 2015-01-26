@@ -63,7 +63,7 @@ namespace Tetris
             {
                 try {
                     this.addBlock(block, piece.X_axis, piece.Y_axis);
-                    block.Position = new Vector2(Common.boardStartX + ((piece.X_axis - block.X_axis)) * Common.blockTextureSize, Common.boardStartY + ((piece.Y_axis - block.Y_axis)+3) * Common.blockTextureSize);
+                    block.Position = new Vector2(Common.boardStartX + ((piece.X_axis + block.X_axis)) * Common.blockTextureSize, Common.boardStartY + ((piece.Y_axis + block.Y_axis)) * Common.blockTextureSize);
                 }
                 catch (Exception e) {
                     Console.WriteLine(e.Message);
@@ -173,13 +173,13 @@ namespace Tetris
 
         public void drawBoard(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            for (int x = 0; x < Blocks.GetUpperBound(0); x++)
+            for (int y = 4; y < Blocks.GetUpperBound(0); y++)
             {
-                for (int y = 0; y < Blocks.GetUpperBound(1); y++)
+                for (int x = 1; x < Blocks.GetUpperBound(1); x++)
                 {
-                    if (Blocks[x, y] != null && Blocks[x, y].Texture != null)
+                    if (Blocks[y, x] != null && Blocks[y, x].Texture != null)
                     {
-                        Blocks[x, y].Draw(spriteBatch, gameTime);
+                        Blocks[y, x].Draw(spriteBatch, gameTime);
                     }
                 }
             }
