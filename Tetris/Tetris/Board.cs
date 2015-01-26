@@ -126,7 +126,7 @@ namespace Tetris
                     }
                     if (sum != 0)
                     {
-                        if(Blocks[piece.Y_axis + i - 3, piece.X_axis + j + 1].Index != 0)
+                        if (Blocks[piece.Y_axis + i, piece.X_axis + j + 2].Index != 0)
                         {
                             result = false;
                         }
@@ -159,7 +159,7 @@ namespace Tetris
                     }
                     if (sum != 0)
                     {
-                        if (Blocks[piece.Y_axis + i - 3, piece.X_axis + j - 1].Index != 0)
+                        if (Blocks[piece.Y_axis + i, piece.X_axis + j].Index != 0)
                         {
                             result = false;
                         }

@@ -134,15 +134,28 @@ namespace Tetris
 
             //Player interactions
             if (_keyboardState.IsKeyDown(Keys.Down) && !_previousKeyboardState.IsKeyDown(Keys.Down))
-                _currentPiece.moveDown(Content);
+            {
+                //if(_board.canMoveDown(_currentPiece))
+                    _currentPiece.moveDown(Content);
+            }
             else if (_keyboardState.IsKeyDown(Keys.Left) && !_previousKeyboardState.IsKeyDown(Keys.Left))
-                _currentPiece.moveLeft(Content);
+            {
+                if(_board.canMoveLeft(_currentPiece))
+                    _currentPiece.moveLeft(Content);
+            }   
             else if (_keyboardState.IsKeyDown(Keys.Right) && !_previousKeyboardState.IsKeyDown(Keys.Right))
-                _currentPiece.moveRight(Content);
+            {
+                if(_board.canMoveRight(_currentPiece))
+                    _currentPiece.moveRight(Content);
+            }
+            else if (_keyboardState.IsKeyDown(Keys.T) && !_previousKeyboardState.IsKeyDown(Keys.T))
+            {
+                if(_board.canRotate(_currentPiece))
+                    _currentPiece.rotate();
+            }
             else if (_keyboardState.IsKeyDown(Keys.Escape))
                 this.Exit();
-            else if (_keyboardState.IsKeyDown(Keys.T) && !_previousKeyboardState.IsKeyDown(Keys.T))
-                _currentPiece.rotate();
+            
             else if (_keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))
             {
                 _board.addPiece(_currentPiece, Content);
