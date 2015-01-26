@@ -39,6 +39,9 @@ namespace Tetris
         //Sound
         private Song _tetrisMusic;
 
+        //Fonts
+        private SpriteFont _informationsFont;
+
         public TetrisGame()
         {
             IsFixedTimeStep = true;
@@ -111,6 +114,7 @@ namespace Tetris
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             _tetrisMusic = Content.Load<Song>("Tetris");
+            _informationsFont = Content.Load<SpriteFont>("Fonts/Infos");
         }
 
         /// <summary>
@@ -195,6 +199,8 @@ namespace Tetris
             
             //DRAW the board
             _board.drawBoard(spriteBatch, gameTime);
+
+            spriteBatch.DrawString(_informationsFont, "685 points", new Vector2(Common.informationsStartX, Common.informationsStartY), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);

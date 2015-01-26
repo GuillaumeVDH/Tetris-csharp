@@ -35,5 +35,9 @@ namespace Tetris
         /* PREVIEW BLOCK */
         static public int previewNextStartX = 340; //The start position - in pixel - of the preview window for the Y axis
         static public int previewNextStartY = 100; //The start position - in pixel - of the preview window for the Y axis
+
+        /* Informations window (level, score, etc) */
+        static public int informationsStartX = 360; //The start position - in pixel - of the informations window for the Y axis
+        static public int informationsStartY = 330; //The start position - in pixel - of the informations window for the Y axis
     }
 }
