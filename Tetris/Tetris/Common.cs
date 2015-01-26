@@ -24,8 +24,8 @@ namespace Tetris
         /* BLOCKS */
         static public int blockTextureSize = 20; //The size - in pixel - of a block texture (X == Y)
         //Texture full path for each block
-        static public string blockTextureI = "Blocks/BlockI";
         static public string blockTextureJ = "Blocks/BlockJ";
+        static public string blockTextureI = "Blocks/BlockI";
         static public string blockTextureL = "Blocks/BlockL";
         static public string blockTextureO = "Blocks/BlockO";
         static public string blockTextureS = "Blocks/BlockS";

@@ -7,14 +7,26 @@ namespace Tetris.Piece
 {
     class PieceL : APiece
     {
-        protected override void getInitShape()
+        public PieceL()
+            : base()
         {
-            Shape = new Shape.ShapeL();
+
+        }
+
+        public PieceL(int x, int y)
+            : base(x, y)
+        {
+
+        }
+
+        protected override Shape.AShape getInitShape()
+        {
+            return new Shape.ShapeL();
         }
 
         protected override Block.ABlock createBlock(int x, int y)
         {
-            return new Block.BlockI(x, y);
+            return new Block.BlockL(x, y);
         }
     }
 }

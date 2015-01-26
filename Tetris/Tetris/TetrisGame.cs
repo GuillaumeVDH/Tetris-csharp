@@ -21,8 +21,8 @@ namespace Tetris
         SpriteBatch spriteBatch;
 
         private Texture2D _background;
-        private Piece.PieceI _currentPiece;
-        private Piece.PieceI _nextPiece;
+        private Piece.APiece _currentPiece;
+        private Piece.APiece _nextPiece;
 
         //Board
         Board _board;
@@ -69,7 +69,7 @@ namespace Tetris
 
             //Init sound background music
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 0.8f;
+            MediaPlayer.Volume = 0f;
 
             //Init the current piece
             _currentPiece = new Piece.PieceI(0,0);
@@ -80,7 +80,7 @@ namespace Tetris
             }
             
             //Init the next piece for preview
-            _nextPiece = new Piece.PieceI(0, 0);
+            _nextPiece = new Piece.PieceL(0, 0);
             foreach (Block.ABlock block in _nextPiece.Blocks)
             {
                 block.Position = new Vector2(Common.previewNextStartX+20 + (_nextPiece.X_axis - block.X_axis) * Common.blockTextureSize, Common.previewNextStartY+20 + ((_nextPiece.Y_axis - block.Y_axis) + 3) * Common.blockTextureSize);
@@ -91,11 +91,8 @@ namespace Tetris
             Piece.APiece piece1;
             piece1 = new Piece.PieceI(4, 4);
             piece1.print();
-            //piece1.X_axis = Common.boardStartX+0*Common.blockTextureSize;
-            //piece1.Y_axis = Common.boardStartY+0*Common.blockTextureSize;
             foreach (Block.ABlock block in piece1.Blocks)
             {
-                Console.WriteLine("BIP1:" + (piece1.X_axis + "+" + block.X_axis) + "/" + (piece1.Y_axis + "+" + block.Y_axis));
                 block.Position = new Vector2(Common.boardStartX + (piece1.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + (piece1.Y_axis + block.Y_axis) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
