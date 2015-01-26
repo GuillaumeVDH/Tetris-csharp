@@ -74,13 +74,13 @@ namespace Tetris
         public bool canMoveDown(Piece.APiece piece)
         {
             bool result = true;
-            int sum, j = 0, i;
+            int sum, i = 0, j;
 
-            while (j < 4 && result)
+            while (i < 4 && result)
             {
-                i = 3;
+                j = 3;
                 sum = 0;
-                while (sum == 0 && i >= 0 && result)
+                while (sum == 0 && j >= 0 && result)
                 {
                     if (piece.Shape.Shape[i,j] != 0)
                     {
@@ -88,16 +88,16 @@ namespace Tetris
                     }
                     else
                     {
-                        i--;
+                        j--;
                     }
                     if (sum != 0)
                     {
-                        if (Blocks[piece.Y_axis - 3 + i + 1, piece.X_axis + j].Index != 0)
+                        if (Blocks[piece.Y_axis+4 + i + 1, piece.X_axis + j+1].Index != 0)
                         {
                             result = false;
                         }
                     }
-                    j++;
+                    i++;
                 }
             }   
 
@@ -126,7 +126,7 @@ namespace Tetris
                     }
                     if (sum != 0)
                     {
-                        if (Blocks[piece.Y_axis + i, piece.X_axis + j + 2].Index != 0)
+                        if (Blocks[piece.Y_axis+4 + i, piece.X_axis + j + 2].Index != 0)
                         {
                             result = false;
                         }
@@ -159,7 +159,7 @@ namespace Tetris
                     }
                     if (sum != 0)
                     {
-                        if (Blocks[piece.Y_axis + i, piece.X_axis + j].Index != 0)
+                        if (Blocks[piece.Y_axis+4 + i, piece.X_axis + j].Index != 0)
                         {
                             result = false;
                         }

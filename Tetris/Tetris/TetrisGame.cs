@@ -69,7 +69,7 @@ namespace Tetris
 
             //Init sound background music
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 0f;
+            MediaPlayer.Volume = 0.1f;
 
             //Init the current piece
             _currentPiece = new Piece.PieceI(0,0);
@@ -135,7 +135,7 @@ namespace Tetris
             //Player interactions
             if (_keyboardState.IsKeyDown(Keys.Down) && !_previousKeyboardState.IsKeyDown(Keys.Down))
             {
-                //if(_board.canMoveDown(_currentPiece))
+                if(_board.canMoveDown(_currentPiece))
                     _currentPiece.moveDown(Content);
             }
             else if (_keyboardState.IsKeyDown(Keys.Left) && !_previousKeyboardState.IsKeyDown(Keys.Left))
