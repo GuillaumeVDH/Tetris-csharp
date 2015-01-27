@@ -11,8 +11,11 @@ namespace Tetris
 {
     class Board
     {
+        public int GameHeight { get; set; }
+
         public Board()
         {
+            GameHeight = 0;
             Width = Common.boardSizeX;
             Height = Common.boardSizeY;
             Blocks = new ABlock[Height,Width];
@@ -69,6 +72,7 @@ namespace Tetris
                     Console.WriteLine(e.Message);
                 }
             }
+            this.countGameHeight();
         }
 
         public bool canMoveDown(Piece.APiece piece)
@@ -208,6 +212,25 @@ namespace Tetris
         public void print()
         {
             Utils.TabUtils.print<Block.ABlock>(Blocks);
+        }
+
+        private void countGameHeight()
+        {
+            int calculatedHeight = 0;
+            for (int y = 4; y < Blocks.GetUpperBound(0); y++)
+            {
+                for (int x = 1; x < Blocks.GetUpperBound(1); x++)
+                {
+                    if(Blocks[y,x].Index != 0)
+                    {
+                        calculatedHeight = Common.boardSizeY - (y + 1);
+                        if (calculatedHeight >= GameHeight)
+                            GameHeight = calculatedHeight;
+                    }
+                }
+            }
+            Console.WriteLine("res " + GameHeight);
+
         }
 
     }

@@ -157,7 +157,7 @@ namespace Tetris
             {
                 //Add the piece to the board
                 _board.addPiece(_currentPiece, Content);
-                _board.print(); //TODO DEBUG ONLY
+                //_board.print(); //TODO DEBUG ONLY
 
                 //Updating the player piece to be equal as the preview windows and set up center & outside of the board
                 _currentPiece = _nextPiece;
@@ -209,6 +209,7 @@ namespace Tetris
             
             //DRAW informations
             spriteBatch.DrawString(_informationsFont, + _points + " points", new Vector2(Common.informationsStartX, Common.informationsStartY), Color.White);
+            spriteBatch.DrawString(_informationsFont, + _board.GameHeight + " lines high", new Vector2(Common.informationsStartX, Common.informationsStartY+90), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
