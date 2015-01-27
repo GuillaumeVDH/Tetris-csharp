@@ -44,6 +44,7 @@ namespace Tetris
 
         //Gameplay
         private int _points;
+        private int _level;
 
         public TetrisGame()
         {
@@ -93,7 +94,9 @@ namespace Tetris
                 block.LoadContent(Content, block.Texture);
             }
 
+            //Gameplay
             _points = 0;
+            _level = 1;
 
             base.Initialize();
             MediaPlayer.Play(_tetrisMusic);
@@ -179,7 +182,6 @@ namespace Tetris
                 }
             }
             _previousKeyboardState = _keyboardState;
-
             base.Update(gameTime);
         }
 
@@ -208,7 +210,8 @@ namespace Tetris
             _board.drawBoard(spriteBatch, gameTime);
             
             //DRAW informations
-            spriteBatch.DrawString(_informationsFont, + _points + " points", new Vector2(Common.informationsStartX, Common.informationsStartY), Color.White);
+            spriteBatch.DrawString(_informationsFont, _points + " points", new Vector2(Common.informationsStartX, Common.informationsStartY), Color.White);
+            spriteBatch.DrawString(_informationsFont, _level + "", new Vector2(Common.informationsStartX, Common.informationsStartY+90), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
@@ -235,6 +238,25 @@ namespace Tetris
                 _nextPiece = new Piece.PieceT(0, 0);
             else
                 _nextPiece = new Piece.PieceZ(0, 0);
+        }
+
+        public void scoreCounter(int lineDelete)
+        {
+            switch (lineDelete)
+            {
+                case 1:
+                    _points = _points + (40 * (_level + 1));
+                    break;
+                case 2:
+                    _points = _points + (100 * (_level + 1));
+                    break;
+                case 3:
+                    _points = _points + (300 * (_level + 1));
+                    break;
+                case 4:
+                    _points = _points + (1200 * (_level + 1));
+                    break;
+            }
         }
 
     }
