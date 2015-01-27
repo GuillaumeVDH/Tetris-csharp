@@ -42,6 +42,9 @@ namespace Tetris
         //Fonts
         private SpriteFont _informationsFont;
 
+        //Gameplay
+        private int _points;
+
         public TetrisGame()
         {
             IsFixedTimeStep = true;
@@ -75,10 +78,10 @@ namespace Tetris
             MediaPlayer.Volume = 0.1f;
 
             //Init the current piece
-            _currentPiece = new Piece.PieceI(0,0);
+            _currentPiece = new Piece.PieceI(4,0);
             foreach (Block.ABlock block in _currentPiece.Blocks)
             {
-                block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis + block.Y_axis) + 3) * Common.blockTextureSize);
+                block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis + block.Y_axis)) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
             
@@ -89,7 +92,9 @@ namespace Tetris
                 block.Position = new Vector2(Common.previewNextStartX+50 + (_nextPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.previewNextStartY + ((_nextPiece.Y_axis + block.Y_axis)) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
-            
+
+            _points = 0;
+
             base.Initialize();
             MediaPlayer.Play(_tetrisMusic);
         }
@@ -190,8 +195,9 @@ namespace Tetris
             
             //DRAW the board
             _board.drawBoard(spriteBatch, gameTime);
-
-            spriteBatch.DrawString(_informationsFont, "685 points", new Vector2(Common.informationsStartX, Common.informationsStartY), Color.White);
+            
+            //DRAW informations
+            spriteBatch.DrawString(_informationsFont, + _points + " points", new Vector2(Common.informationsStartX, Common.informationsStartY), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);

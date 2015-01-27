@@ -9,7 +9,7 @@ namespace Tetris.Block
     {
         public BlockZ(int x, int y) : base(x , y)
         {
-            Index = 10;
+            Index = 7;
             Texture = Common.blockTextureZ;
         }
         public override string Texture { get; set; }
