@@ -97,7 +97,7 @@ namespace Tetris
                     {
                         Console.WriteLine("Actual:" + (piece.Y_axis + 4 +  i) + "/" + (piece.X_axis + j));
                         Console.WriteLine("Bottom:" + (piece.Y_axis + 4 + i+1) + "/" + (piece.X_axis + j));
-                        if (Blocks[piece.Y_axis +4 + i, piece.X_axis + j+1].Index != 0)
+                        if (Blocks[piece.Y_axis +5 + i, piece.X_axis + j+1].Index != 0)
                         {
                             result = false;
                         }

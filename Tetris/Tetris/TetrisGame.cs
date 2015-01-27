@@ -153,20 +153,30 @@ namespace Tetris
             }
             else if (_keyboardState.IsKeyDown(Keys.Escape))
                 this.Exit();
-            
             else if (_keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))
             {
+                //Add the piece to the board
                 _board.addPiece(_currentPiece, Content);
-                _board.print();
+                _board.print(); //TODO DEBUG ONLY
 
-                //_currentPiece = new Piece.PieceL(4,0);
-                this.randomPiece();
+                //Updating the player piece to be equal as the preview windows and set up center & outside of the board
+                _currentPiece = _nextPiece;
+                _currentPiece.X_axis = 5;
+                _currentPiece.Y_axis = -4;
                 foreach (Block.ABlock block in _currentPiece.Blocks)
                 {
+                    Console.WriteLine("W:" + block.X_axis + "/" + ( _currentPiece.Y_axis+ block.Y_axis));
                     block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis + block.Y_axis)) * Common.blockTextureSize);
                     block.LoadContent(Content, block.Texture);
                 }
-                //TODO update the next piece preview
+
+                //Switching for a brand new next piece!
+                this.randomPiece();
+                foreach (Block.ABlock block in _nextPiece.Blocks)
+                {
+                    block.Position = new Vector2(Common.previewNextStartX+40 + (_nextPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.previewNextStartY+10 + ((_nextPiece.Y_axis + block.Y_axis)) * Common.blockTextureSize);
+                    block.LoadContent(Content, block.Texture);
+                }
             }
             _previousKeyboardState = _keyboardState;
 
@@ -187,10 +197,11 @@ namespace Tetris
                 block.Draw(spriteBatch, gameTime);
             }
 
-            //DRAW the piece
+            //DRAW the piece (but only if not hidden)
             foreach(Block.ABlock block in _currentPiece.Blocks)
             {
-                block.Draw(spriteBatch, gameTime);
+                if(_currentPiece.Y_axis+block.Y_axis >=0)
+                    block.Draw(spriteBatch, gameTime);
             }
             
             //DRAW the board
@@ -203,25 +214,27 @@ namespace Tetris
             base.Draw(gameTime);
         }
 
+        /*
+         * Reset _nextPiece with a total random new piece
+         */
         public void randomPiece()
         {
             Random rnd = new Random();
-            int random = rnd.Next(1, 8); // create number between 1 to 7
-            Console.WriteLine("numero de random : " + random);
+            int random = rnd.Next(1, 8);
             if (random == 1)
-                _currentPiece = new Piece.PieceI(5, 0);
+                _nextPiece = new Piece.PieceI(0, 0);
             else if (random == 2)
-                _currentPiece = new Piece.PieceL(5, 0);
+                _nextPiece = new Piece.PieceL(0, 0);
             else if (random == 3)
-                _currentPiece = new Piece.PieceJ(5, 0);
+                _nextPiece = new Piece.PieceJ(0, 0);
             else if (random == 4)
-                _currentPiece = new Piece.PieceO(5, 0);
+                _nextPiece = new Piece.PieceO(0, 0);
             else if (random == 5)
-                _currentPiece = new Piece.PieceS(5, 0);
+                _nextPiece = new Piece.PieceS(0, 0);
             else if (random == 6)
-                _currentPiece = new Piece.PieceT(5, 0);
+                _nextPiece = new Piece.PieceT(0, 0);
             else
-                _currentPiece = new Piece.PieceZ(5, 0);
+                _nextPiece = new Piece.PieceZ(0, 0);
         }
 
     }
