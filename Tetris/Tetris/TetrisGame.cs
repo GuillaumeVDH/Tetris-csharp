@@ -79,7 +79,10 @@ namespace Tetris
             MediaPlayer.Volume = 0.1f;
 
             //Init the current piece
-            _currentPiece = new Piece.PieceI(5,3);
+            this.randomPiece(); //First, create a "_nextPiece" using the random
+            _currentPiece = _nextPiece;
+            _currentPiece.X_axis = 5;
+            _currentPiece.Y_axis = 3;
             foreach (Block.ABlock block in _currentPiece.Blocks)
             {
                 block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)-3) * Common.blockTextureSize);
@@ -87,7 +90,7 @@ namespace Tetris
             }
             
             //Init the next piece for preview
-            _nextPiece = new Piece.PieceL(0, 0);
+            this.randomPiece();
             foreach (Block.ABlock block in _nextPiece.Blocks)
             {
                 block.Position = new Vector2(Common.previewNextStartX + 60 + ((_nextPiece.X_axis + block.X_axis) - 1) * Common.blockTextureSize, Common.previewNextStartY + 120 + ((_nextPiece.Y_axis - block.Y_axis) - 3) * Common.blockTextureSize);
