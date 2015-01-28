@@ -43,14 +43,14 @@ namespace Tetris
         private SpriteFont _informationsFont;
 
         //Gameplay
+        private int _timer;
         private int _points;
         private int _level;
-
-        private int timer;
+        private bool _isAGoToGoDown;
+        
 
         public TetrisGame()
         {
-            timer = 1000;
             IsFixedTimeStep = true;
             
             graphics = new GraphicsDeviceManager(this);
@@ -59,6 +59,9 @@ namespace Tetris
             graphics.ApplyChanges();
             graphics.SynchronizeWithVerticalRetrace = false;
             _board = new Board();
+
+            _timer = 1000;
+            _isAGoToGoDown = false;
 
             Content.RootDirectory = "Content";
         }
@@ -168,7 +171,8 @@ namespace Tetris
                 this.Exit();
             else if (_keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))
             {
-                this.addPieceToBoard(Content);
+                _isAGoToGoDown = true;
+                this.moveDown(gameTime, Content);
             }
             _previousKeyboardState = _keyboardState;
             base.Update(gameTime);
@@ -250,16 +254,27 @@ namespace Tetris
 
         private void moveDown(GameTime gameTime, ContentManager Content)
         {
-            double elapsed = gameTime.ElapsedGameTime.TotalMilliseconds;
-            timer -= (int)elapsed;
-            if (timer <= 0)
+            if (_isAGoToGoDown)
             {
-                timer = 1000;   //Reset Timer
-                if (_board.canMoveDown(_currentPiece))
+                while (_board.canMoveDown(_currentPiece))
+                {
                     _currentPiece.moveDown(Content);
-                else
-                    this.addPieceToBoard(Content);
-                    
+                }
+                _isAGoToGoDown = false;
+            }
+            else
+            {
+                double elapsed = gameTime.ElapsedGameTime.TotalMilliseconds;
+                _timer -= (int)elapsed;
+
+                if (_timer <= 0)
+                {
+                    _timer = 1000;   //Reset Timer
+                    if (_board.canMoveDown(_currentPiece))
+                        _currentPiece.moveDown(Content);
+                    else
+                        this.addPieceToBoard(Content);
+                }
             }
         }
 
