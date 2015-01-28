@@ -144,8 +144,15 @@ namespace Tetris
             //Player interactions
             if (_keyboardState.IsKeyDown(Keys.Down) && !_previousKeyboardState.IsKeyDown(Keys.Down))
             {
-                if(_board.canMoveDown(_currentPiece))
-                    _currentPiece.moveDown(Content);
+                if (_board.canRotate(_currentPiece))
+                {
+                    _currentPiece.rotate(Content);
+                }
+                foreach (Block.ABlock block in _currentPiece.Blocks)
+                {
+                    block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis) - 1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis) - 4) * Common.blockTextureSize);
+                    block.LoadContent(Content, block.Texture);
+                }  
             }
             else if (_keyboardState.IsKeyDown(Keys.Left) && !_previousKeyboardState.IsKeyDown(Keys.Left))
             {
@@ -156,17 +163,6 @@ namespace Tetris
             {
                 if(_board.canMoveRight(_currentPiece))
                     _currentPiece.moveRight(Content);
-            }
-            else if (_keyboardState.IsKeyDown(Keys.T) && !_previousKeyboardState.IsKeyDown(Keys.T))
-            {
-                if (_board.canRotate(_currentPiece)) {
-                    _currentPiece.rotate(Content);
-                }
-                foreach (Block.ABlock block in _currentPiece.Blocks)
-                {
-                    block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)-3) * Common.blockTextureSize);
-                    block.LoadContent(Content, block.Texture);
-                }   
             }
             else if (_keyboardState.IsKeyDown(Keys.Escape))
                 this.Exit();
