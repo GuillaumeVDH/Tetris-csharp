@@ -79,10 +79,10 @@ namespace Tetris
             MediaPlayer.Volume = 0.1f;
 
             //Init the current piece
-            _currentPiece = new Piece.PieceI(4,3);
+            _currentPiece = new Piece.PieceI(5,3);
             foreach (Block.ABlock block in _currentPiece.Blocks)
             {
-                block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)) * Common.blockTextureSize);
+                block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)-3) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
             
@@ -156,7 +156,7 @@ namespace Tetris
                 }
                 foreach (Block.ABlock block in _currentPiece.Blocks)
                 {
-                    block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)) * Common.blockTextureSize);
+                    block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)-3) * Common.blockTextureSize);
                     block.LoadContent(Content, block.Texture);
                 }   
             }
@@ -174,7 +174,7 @@ namespace Tetris
                 _currentPiece.Y_axis = 3;
                 foreach (Block.ABlock block in _currentPiece.Blocks)
                 {
-                    block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)) * Common.blockTextureSize);
+                    block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)-3) * Common.blockTextureSize);
                     block.LoadContent(Content, block.Texture);
                 }
 
@@ -182,7 +182,7 @@ namespace Tetris
                 this.randomPiece();
                 foreach (Block.ABlock block in _nextPiece.Blocks)
                 {
-                    block.Position = new Vector2(Common.previewNextStartX+40 + (_nextPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.previewNextStartY+10 + ((_nextPiece.Y_axis - block.Y_axis)) * Common.blockTextureSize);
+                    block.Position = new Vector2(Common.previewNextStartX+60 + ((_nextPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.previewNextStartY+120 + ((_nextPiece.Y_axis - block.Y_axis)-3) * Common.blockTextureSize);
                     block.LoadContent(Content, block.Texture);
                 }
             }
@@ -207,7 +207,7 @@ namespace Tetris
             //DRAW the piece (but only if not hidden)
             foreach(Block.ABlock block in _currentPiece.Blocks)
             {
-                if(_currentPiece.Y_axis - block.Y_axis >= 3)
+                if(_currentPiece.Y_axis - block.Y_axis >= 4)
                     block.Draw(spriteBatch, gameTime);
             }
             
@@ -224,7 +224,7 @@ namespace Tetris
         }
 
         /*
-         * Reset _nextPiece with a total random new piece
+         * Renew _nextPiece with a total random new piece
          */
         public void randomPiece()
         {

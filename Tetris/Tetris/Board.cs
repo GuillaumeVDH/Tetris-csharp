@@ -65,7 +65,7 @@ namespace Tetris
             {
                 try {
                     this.addBlock(block, piece.X_axis, piece.Y_axis);
-                    block.Position = new Vector2(Common.boardStartX + ((piece.X_axis + block.X_axis)) * Common.blockTextureSize, Common.boardStartY + ((piece.Y_axis - block.Y_axis)) * Common.blockTextureSize);
+                    block.Position = new Vector2(Common.boardStartX + ((piece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.boardStartY + ((piece.Y_axis - block.Y_axis)-4) * Common.blockTextureSize);
                 }
                 catch (Exception e) {
                     Console.WriteLine(e.Message);
@@ -83,7 +83,7 @@ namespace Tetris
             {
                 i = 3;
                 sum = 0;
-                while (sum == 0 && i >= 0 && result) //Added i<4 as it grow out of the array limits
+                while (sum == 0 && i >= 0 && result)
                 {   
                     if (piece.Shape.Shape[i,j] != 0)
                     {
@@ -178,7 +178,7 @@ namespace Tetris
         {
             for (int y = 4; y < Blocks.GetUpperBound(0); y++)
             {
-                for (int x = 1; x < Blocks.GetUpperBound(1); x++)
+                for (int x = 0; x < Blocks.GetUpperBound(1); x++)
                 {
                     if (Blocks[y, x] != null && Blocks[y, x].Texture != null)
                     {
