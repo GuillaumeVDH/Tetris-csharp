@@ -91,7 +91,7 @@ namespace Tetris
             _currentPiece.Y_axis = 3;
             foreach (Block.ABlock block in _currentPiece.Blocks)
             {
-                block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)-3) * Common.blockTextureSize);
+                block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)-4) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
             
@@ -99,7 +99,7 @@ namespace Tetris
             this.randomPiece();
             foreach (Block.ABlock block in _nextPiece.Blocks)
             {
-                block.Position = new Vector2(Common.previewNextStartX + 60 + ((_nextPiece.X_axis + block.X_axis) - 1) * Common.blockTextureSize, Common.previewNextStartY + 120 + ((_nextPiece.Y_axis - block.Y_axis) - 3) * Common.blockTextureSize);
+                block.Position = new Vector2(Common.previewNextStartX + 60 + ((_nextPiece.X_axis + block.X_axis) - 1) * Common.blockTextureSize, Common.previewNextStartY + 120 + ((_nextPiece.Y_axis - block.Y_axis) - 4) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
 
@@ -119,7 +119,9 @@ namespace Tetris
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            //Load the theme song
             _tetrisMusic = Content.Load<Song>("Tetris");
+            //Load the font used to draw text on the screen
             _informationsFont = Content.Load<SpriteFont>("Fonts/Infos");
         }
 
@@ -186,6 +188,7 @@ namespace Tetris
         {
             spriteBatch.Begin();
             spriteBatch.Draw(_background, Vector2.Zero, Color.White);
+
             //DRAW the next piece preview
             foreach (Block.ABlock block in _nextPiece.Blocks)
             {
