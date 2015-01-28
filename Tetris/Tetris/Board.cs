@@ -47,26 +47,25 @@ namespace Tetris
 
         private void addBlock(Block.ABlock block, int piece_x, int piece_y)
         {
-            if ((piece_x + block.X_axis >= 0 && piece_x + block.X_axis <= Common.boardSizeX-1) && (piece_y + block.Y_axis >= 0 && piece_y + block.Y_axis <= Common.boardSizeY - 1))
-                Blocks[(piece_y + block.Y_axis)+4, (piece_x + block.X_axis)+1] = block;
+            if ((piece_x + block.X_axis >= 1 && piece_x + block.X_axis <= Common.boardSizeX-1) && (piece_y - block.Y_axis >= 0 && piece_y - block.Y_axis <= Common.boardSizeY - 1))
+                Blocks[(piece_y - block.Y_axis), (piece_x + block.X_axis)] = block;
             else
-                throw new Exception("AddBlock - Out of bounds coordinates (x/y):" + (piece_x + block.X_axis) + "/" + (piece_y + block.Y_axis));
+                throw new Exception("AddBlock - Out of bounds coordinates (x/y):" + (piece_x + block.X_axis) + "/" + (piece_y - block.Y_axis));
         }
 
         private void removeBlock(Block.ABlock block, int piece_x, int piece_y){
             if ((piece_x + block.X_axis >= 0 && piece_x + block.X_axis <= Common.boardSizeX) && (piece_y + block.Y_axis >= 0 && piece_y + block.Y_axis <= Common.boardSizeY))
-                Blocks[piece_y + block.Y_axis, piece_x + block.X_axis] = null;
+                Blocks[piece_y - block.Y_axis, piece_x + block.X_axis] = null;
             else
-                throw new Exception("removeBlock - Out of bounds coordinates (x/y):" + (piece_x + block.X_axis) + "/" + (piece_y + block.Y_axis));
+                throw new Exception("removeBlock - Out of bounds coordinates (x/y):" + (piece_x + block.X_axis) + "/" + (piece_y - block.Y_axis));
         }
 
         public void addPiece(Piece.APiece piece, ContentManager content) {
-            Console.WriteLine("AP:" + piece.X_axis + "/" + piece.Y_axis);
             foreach (Block.ABlock block in piece.Blocks)
             {
                 try {
                     this.addBlock(block, piece.X_axis, piece.Y_axis);
-                    block.Position = new Vector2(Common.boardStartX + ((piece.X_axis + block.X_axis)) * Common.blockTextureSize, Common.boardStartY + ((piece.Y_axis + block.Y_axis)) * Common.blockTextureSize);
+                    block.Position = new Vector2(Common.boardStartX + ((piece.X_axis + block.X_axis)) * Common.blockTextureSize, Common.boardStartY + ((piece.Y_axis - block.Y_axis)) * Common.blockTextureSize);
                 }
                 catch (Exception e) {
                     Console.WriteLine(e.Message);
@@ -77,38 +76,33 @@ namespace Tetris
 
         public bool canMoveDown(Piece.APiece piece)
         {
-            piece.print();
             bool result = true;
-            int sum, i = 0, j;
+            int sum, i, j = 0;
 
-            while (i < 4 && result)
+            while (j < 4 && result)
             {
-                j = 3;
+                i = 3;
                 sum = 0;
-                while (sum == 0 && j >= 0 && result && i < 4) //Added i<4 as it grow out of the array limits
-                {
-                    Console.WriteLine("i/j: " + i + j);
-                    
+                while (sum == 0 && i >= 0 && result) //Added i<4 as it grow out of the array limits
+                {   
                     if (piece.Shape.Shape[i,j] != 0)
                     {
                         sum += piece.Shape.Shape[i, j];
                     }
                     else
                     {
-                        j--;
+                        i--;
                     }
                     if (sum != 0)
                     {
-                        Console.WriteLine("Actual:" + (piece.Y_axis + 4 +  i) + "/" + (piece.X_axis + j));
-                        Console.WriteLine("Bottom:" + (piece.Y_axis + 4 + i+1) + "/" + (piece.X_axis + j));
-                        if (Blocks[piece.Y_axis +5 + i, piece.X_axis + j+1].Index != 0)
+                        if (Blocks[piece.Y_axis - 2 + i, piece.X_axis + j].Index != 0)
                         {
                             result = false;
                         }
                     }
-                    i++;
                 }
-            }   
+                j++;
+            }
 
             return result;
         }
@@ -135,7 +129,7 @@ namespace Tetris
                     }
                     if (sum != 0)
                     {
-                        if (Blocks[piece.Y_axis+4 + i, piece.X_axis + j + 2].Index != 0)
+                        if (Blocks[piece.Y_axis - 3 + i, piece.X_axis + j + 1].Index != 0)
                         {
                             result = false;
                         }
@@ -168,7 +162,7 @@ namespace Tetris
                     }
                     if (sum != 0)
                     {
-                        if (Blocks[piece.Y_axis+4 + i, piece.X_axis + j].Index != 0)
+                        if (Blocks[piece.Y_axis - 3 + i, piece.X_axis + j - 1].Index != 0)
                         {
                             result = false;
                         }
@@ -197,15 +191,27 @@ namespace Tetris
         public bool canRotate(Piece.APiece piece)
         {
             Piece.APiece pieceTemp = piece;
-            bool result = true;
 
-            pieceTemp.rotate();
+            bool result = true;
+            pieceTemp.rotate(null);
+
             foreach(Block.ABlock block in pieceTemp.Blocks ){
-                if (Blocks[pieceTemp.Y_axis + block.Y_axis, pieceTemp.X_axis + block.X_axis].Index != 0)
+                try
                 {
-                    result = false;
+                    if (Blocks[pieceTemp.Y_axis - block.Y_axis, pieceTemp.X_axis + block.X_axis].Index != 0)
+                    {
+                        result = false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
             }
+
+            pieceTemp.rotate(null);
+            pieceTemp.rotate(null);
+            pieceTemp.rotate(null);
 
             return result;
         }

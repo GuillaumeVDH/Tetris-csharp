@@ -9,7 +9,8 @@ namespace Tetris.Shape
     {
         public int[,] Shape { get; set; }
 
-        public AShape(){
+        public AShape()
+        {
             this.Shape = new int[4,4];
             this.init();
             this.placeInCorner();

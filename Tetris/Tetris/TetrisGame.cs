@@ -79,10 +79,10 @@ namespace Tetris
             MediaPlayer.Volume = 0.1f;
 
             //Init the current piece
-            _currentPiece = new Piece.PieceI(4,0);
+            _currentPiece = new Piece.PieceI(4,3);
             foreach (Block.ABlock block in _currentPiece.Blocks)
             {
-                block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis + block.Y_axis)) * Common.blockTextureSize);
+                block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
             
@@ -90,7 +90,7 @@ namespace Tetris
             _nextPiece = new Piece.PieceL(0, 0);
             foreach (Block.ABlock block in _nextPiece.Blocks)
             {
-                block.Position = new Vector2(Common.previewNextStartX+50 + (_nextPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.previewNextStartY + ((_nextPiece.Y_axis + block.Y_axis)) * Common.blockTextureSize);
+                block.Position = new Vector2(Common.previewNextStartX+50 + (_nextPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.previewNextStartY + ((_nextPiece.Y_axis - block.Y_axis)) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
 
@@ -151,8 +151,14 @@ namespace Tetris
             }
             else if (_keyboardState.IsKeyDown(Keys.T) && !_previousKeyboardState.IsKeyDown(Keys.T))
             {
-                if(_board.canRotate(_currentPiece))
-                    _currentPiece.rotate();
+                if (_board.canRotate(_currentPiece)) {
+                    _currentPiece.rotate(Content);
+                }
+                foreach (Block.ABlock block in _currentPiece.Blocks)
+                {
+                    block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)) * Common.blockTextureSize);
+                    block.LoadContent(Content, block.Texture);
+                }   
             }
             else if (_keyboardState.IsKeyDown(Keys.Escape))
                 this.Exit();
@@ -160,16 +166,15 @@ namespace Tetris
             {
                 //Add the piece to the board
                 _board.addPiece(_currentPiece, Content);
-                //_board.print(); //TODO DEBUG ONLY
+                _board.print(); //TODO DEBUG ONLY
 
                 //Updating the player piece to be equal as the preview windows and set up center & outside of the board
                 _currentPiece = _nextPiece;
                 _currentPiece.X_axis = 5;
-                _currentPiece.Y_axis = -4;
+                _currentPiece.Y_axis = 3;
                 foreach (Block.ABlock block in _currentPiece.Blocks)
                 {
-                    Console.WriteLine("W:" + block.X_axis + "/" + ( _currentPiece.Y_axis+ block.Y_axis));
-                    block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis + block.Y_axis)) * Common.blockTextureSize);
+                    block.Position = new Vector2(Common.boardStartX + (_currentPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)) * Common.blockTextureSize);
                     block.LoadContent(Content, block.Texture);
                 }
 
@@ -177,7 +182,7 @@ namespace Tetris
                 this.randomPiece();
                 foreach (Block.ABlock block in _nextPiece.Blocks)
                 {
-                    block.Position = new Vector2(Common.previewNextStartX+40 + (_nextPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.previewNextStartY+10 + ((_nextPiece.Y_axis + block.Y_axis)) * Common.blockTextureSize);
+                    block.Position = new Vector2(Common.previewNextStartX+40 + (_nextPiece.X_axis + block.X_axis) * Common.blockTextureSize, Common.previewNextStartY+10 + ((_nextPiece.Y_axis - block.Y_axis)) * Common.blockTextureSize);
                     block.LoadContent(Content, block.Texture);
                 }
             }
@@ -202,7 +207,7 @@ namespace Tetris
             //DRAW the piece (but only if not hidden)
             foreach(Block.ABlock block in _currentPiece.Blocks)
             {
-                if(_currentPiece.Y_axis+block.Y_axis >=0)
+                if(_currentPiece.Y_axis - block.Y_axis >= 3)
                     block.Draw(spriteBatch, gameTime);
             }
             

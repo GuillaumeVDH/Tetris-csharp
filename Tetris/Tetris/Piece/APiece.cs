@@ -35,10 +35,12 @@ namespace Tetris.Piece
             Y_axis = y;
         }
 
-        public void rotate()
+        public void rotate(ContentManager content)
         {
             Shape.rotate();
             setBlocks();
+            updatePiece(content);
+            Console.WriteLine("rotate :");
             print();
         }
 
@@ -64,10 +66,9 @@ namespace Tetris.Piece
 
         private void updatePiece(ContentManager content)
         {
-            Console.WriteLine("UP:" + (this.X_axis) + "/" + (this.Y_axis));
             foreach (Block.ABlock block in this.Blocks)
             {
-                    block.Position = new Vector2(Common.boardStartX + (this.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((this.Y_axis + block.Y_axis)) * Common.blockTextureSize);
+                    block.Position = new Vector2(Common.boardStartX + (this.X_axis + block.X_axis) * Common.blockTextureSize, Common.boardStartY + ((this.Y_axis - block.Y_axis)) * Common.blockTextureSize);
             }
         }
 
@@ -86,7 +87,7 @@ namespace Tetris.Piece
                 {
                     if (Shape.Shape[i, j] > 0)
                     {
-                        Blocks.Add(createBlock(j, i));
+                        Blocks.Add(createBlock(j, 3 - i));
                     }
                 }
             }

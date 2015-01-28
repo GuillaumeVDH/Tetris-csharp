@@ -84,6 +84,7 @@
     <Compile Include="Block\BlockL.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="Gameplay\Score.cs" />
     <Compile Include="Piece\APiece.cs" />
     <Compile Include="Piece\PieceI.cs" />
     <Compile Include="Piece\PieceJ.cs" />
