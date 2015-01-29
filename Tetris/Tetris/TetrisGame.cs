@@ -46,7 +46,9 @@ namespace Tetris
         private int _points;
         private int _level;
         private bool _isAGoToGoDown;
-        
+
+        //random
+        private static Random rnd = new Random();
 
         public TetrisGame()
         {
@@ -167,12 +169,32 @@ namespace Tetris
                 if(_board.canMoveRight(_currentPiece))
                     _currentPiece.moveRight(Content);
             }
+            else if (_keyboardState.IsKeyDown(Keys.T) && !_previousKeyboardState.IsKeyDown(Keys.T))
+            {
+                if (_board.canRotate(_currentPiece)) {
+                    _currentPiece.rotate(Content);
+                }
+                foreach (Block.ABlock block in _currentPiece.Blocks)
+                {
+                    block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)-3) * Common.blockTextureSize);
+                    block.LoadContent(Content, block.Texture);
+                }   
+            }
             else if (_keyboardState.IsKeyDown(Keys.Escape))
                 this.Exit();
             else if (_keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))
             {
                 _isAGoToGoDown = true;
                 this.moveDown(gameTime, Content);
+                }
+
+                //Switching for a brand new next piece!
+                this.randomPiece();
+                foreach (Block.ABlock block in _nextPiece.Blocks)
+                {
+                    block.Position = new Vector2(Common.previewNextStartX+60 + ((_nextPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.previewNextStartY+120 + ((_nextPiece.Y_axis - block.Y_axis)-3) * Common.blockTextureSize);
+                    block.LoadContent(Content, block.Texture);
+                }
             }
             _previousKeyboardState = _keyboardState;
             base.Update(gameTime);
@@ -216,7 +238,6 @@ namespace Tetris
          */
         public void randomPiece()
         {
-            Random rnd = new Random();
             int random = rnd.Next(1, 8);
             if (random == 1)
                 _nextPiece = new Piece.PieceI(0, 0);
@@ -262,7 +283,7 @@ namespace Tetris
                     _currentPiece.moveDown(Content);
                 }
                 _isAGoToGoDown = false;
-            }
+        }
             else
             {
                 double elapsed = gameTime.ElapsedGameTime.TotalMilliseconds;
