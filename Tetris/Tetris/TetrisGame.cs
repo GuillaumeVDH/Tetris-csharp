@@ -30,7 +30,6 @@ namespace Tetris
         //Player
         private KeyboardState _keyboardState;
         private KeyboardState _previousKeyboardState;
-        private MouseState _mouseState;
 
         //Screen
         private int _screenHeight;
@@ -84,6 +83,10 @@ namespace Tetris
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = 0.1f;
 
+            //Gameplay
+            _points = 0;
+            _level = 1;
+
             //Init the current piece
             this.randomPiece(); //First, create a "_nextPiece" using the random
             _currentPiece = _nextPiece;
@@ -102,10 +105,6 @@ namespace Tetris
                 block.Position = new Vector2(Common.previewNextStartX + 60 + ((_nextPiece.X_axis + block.X_axis) - 1) * Common.blockTextureSize, Common.previewNextStartY + 120 + ((_nextPiece.Y_axis - block.Y_axis) - 4) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
-
-            //Gameplay
-            _points = 0;
-            _level = 1;
 
             base.Initialize();
             MediaPlayer.Play(_tetrisMusic);
@@ -144,7 +143,6 @@ namespace Tetris
             this.moveDown(gameTime, Content);
 
             _keyboardState = Keyboard.GetState();
-            _mouseState = Mouse.GetState();
 
             //Player interactions
             if (_keyboardState.IsKeyDown(Keys.Down) && !_previousKeyboardState.IsKeyDown(Keys.Down))
