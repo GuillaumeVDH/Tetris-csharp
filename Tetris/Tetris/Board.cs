@@ -240,10 +240,11 @@ namespace Tetris
         }
 
         private void deleteRows(int y, int nbRows){
-            Console.WriteLine("Before deletion :");
-            print();
+            //Console.WriteLine("Before deletion :");
+            //print();
             for (int j = 0; j < nbRows; j++)
             {
+                Console.WriteLine("Deleting row Y:" + (j + y));
                 for (int i = 1; i < Common.boardSizeX - 1; i++)
                 {
                     Vector2 position = new Vector2(Blocks[j + y, i].Position.X, Blocks[j + y, i].Position.Y);
@@ -251,12 +252,15 @@ namespace Tetris
                     Blocks[j + y, i].Position = position;
                 }
             }
-            for (int j = y + nbRows - 1; j > nbRows; j--)
-            {
-                for (int i = 1; i < Common.boardSizeX ; i++)
+            
+           for (int j = y + nbRows - 1; j > nbRows; j--)
+           {
+                Console.WriteLine("Updating row Y:" + j);
+                for (int i = 1; i < Common.boardSizeX - 1; i++)
                 {
-                    Vector2 position = new Vector2(Blocks[j, i].Position.X, Blocks[j, i].Position.Y-nbRows);
                     Blocks[j, i] = Blocks[j - nbRows, i];
+                    Vector2 position = new Vector2(Blocks[j-nbRows, i].Position.X, Blocks[j-nbRows, i].Position.Y+20*nbRows);
+                    
                     Blocks[j, i].Position = position;
                 }
             }
