@@ -186,15 +186,6 @@ namespace Tetris
             {
                 _isAGoToGoDown = true;
                 this.moveDown(gameTime, Content);
-                }
-
-                //Switching for a brand new next piece!
-                this.randomPiece();
-                foreach (Block.ABlock block in _nextPiece.Blocks)
-                {
-                    block.Position = new Vector2(Common.previewNextStartX+60 + ((_nextPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.previewNextStartY+120 + ((_nextPiece.Y_axis - block.Y_axis)-3) * Common.blockTextureSize);
-                    block.LoadContent(Content, block.Texture);
-                }
             }
             _previousKeyboardState = _keyboardState;
             base.Update(gameTime);

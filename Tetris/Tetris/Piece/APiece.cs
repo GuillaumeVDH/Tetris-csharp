@@ -40,8 +40,6 @@ namespace Tetris.Piece
             Shape.rotate();
             setBlocks();
             updatePiece(content);
-            Console.WriteLine("rotate :");
-            print();
         }
 
         abstract protected Shape.AShape getInitShape();

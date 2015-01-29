@@ -71,6 +71,7 @@ namespace Tetris
                     Console.WriteLine(e.Message);
                 }
             }
+            this.deleteFullRows();
             this.countGameHeight();
         }
 
@@ -215,6 +216,7 @@ namespace Tetris
 
             return result;
         }
+
         public void print()
         {
             Utils.TabUtils.print<Block.ABlock>(Blocks);
@@ -251,9 +253,9 @@ namespace Tetris
             }
             for (int j = y + nbRows - 1; j > nbRows; j--)
             {
-                for (int i = 1; i < Common.boardSizeX - 1; i++)
+                for (int i = 1; i < Common.boardSizeX ; i++)
                 {
-                    Vector2 position = new Vector2(Blocks[j, i].Position.X, Blocks[j, i].Position.Y);
+                    Vector2 position = new Vector2(Blocks[j, i].Position.X, Blocks[j, i].Position.Y-nbRows);
                     Blocks[j, i] = Blocks[j - nbRows, i];
                     Blocks[j, i].Position = position;
                 }
