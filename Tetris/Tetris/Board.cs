@@ -85,8 +85,8 @@ namespace Tetris
                 i = 3;
                 sum = 0;
                 while (sum == 0 && i >= 0 && result)
-                {   
-                    if (piece.Shape.Shape[i,j] != 0)
+                {
+                    if (piece.Shape.Shape[i, j] != 0)  //A block is detected
                     {
                         sum += piece.Shape.Shape[i, j];
                     }
@@ -94,10 +94,11 @@ namespace Tetris
                     {
                         i--;
                     }
-                    if (sum != 0)
+                    if (sum != 0) //If we've detected a block at the previous step, check if there is someone below
                     {
                         if (Blocks[piece.Y_axis - 2 + i, piece.X_axis + j].Index != 0)
                         {
+                            //Someone is below us, we can't move down anymore.
                             result = false;
                         }
                     }

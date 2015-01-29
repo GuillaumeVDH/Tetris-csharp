@@ -11,9 +11,6 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Tetris
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
     public class TetrisGame : Microsoft.Xna.Framework.Game
     {
         //Graphic
@@ -107,7 +104,7 @@ namespace Tetris
             this.randomPiece();
             foreach (Block.ABlock block in _nextPiece.Blocks)
             {
-                block.Position = new Vector2(Common.previewNextStartX + 60 + ((_nextPiece.X_axis + block.X_axis) - 1) * Common.blockTextureSize, Common.previewNextStartY + 120 + ((_nextPiece.Y_axis - block.Y_axis) - 4) * Common.blockTextureSize);
+                block.Position = new Vector2(Common.previewNextStartX + 60 + ((_nextPiece.X_axis + block.X_axis) - 1) * Common.blockTextureSize, Common.previewNextStartY + 140 + ((_nextPiece.Y_axis - block.Y_axis) - 4) * Common.blockTextureSize);
                 block.LoadContent(Content, block.Texture);
             }
 
@@ -148,7 +145,7 @@ namespace Tetris
         {
             _keyboardState = Keyboard.GetState();
 
-            if (_board.GameHeight < 20)
+            if (_board.GameHeight < 21)
             {
                 this.moveDown(gameTime, Content);
 
