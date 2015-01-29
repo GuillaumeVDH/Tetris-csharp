@@ -40,12 +40,14 @@ namespace Tetris
 
         //Fonts
         private SpriteFont _informationsFont;
+        private SpriteFont _gameOverFont;
 
         //Gameplay
         private int _timer;
         private int _points;
         private int _level;
         private bool _isAGoToGoDown;
+        private bool _gameOver;
 
         //random
         private static Random rnd = new Random();
@@ -63,6 +65,7 @@ namespace Tetris
 
             _timer = 1000;
             _isAGoToGoDown = false;
+            _gameOver = false;
 
             Content.RootDirectory = "Content";
         }
@@ -124,6 +127,7 @@ namespace Tetris
             _tetrisMusic = Content.Load<Song>("Tetris");
             //Load the font used to draw text on the screen
             _informationsFont = Content.Load<SpriteFont>("Fonts/Infos");
+            _gameOverFont = Content.Load<SpriteFont>("Fonts/GameOver");
         }
 
         /// <summary>
@@ -142,51 +146,61 @@ namespace Tetris
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            this.moveDown(gameTime, Content);
-
             _keyboardState = Keyboard.GetState();
 
-            //Player interactions
-            if (_keyboardState.IsKeyDown(Keys.Down) && !_previousKeyboardState.IsKeyDown(Keys.Down))
+            if (_board.GameHeight < 20)
             {
-                if (_board.canRotate(_currentPiece))
-                {
-                    _currentPiece.rotate(Content);
-                }
-                foreach (Block.ABlock block in _currentPiece.Blocks)
-                {
-                    block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis) - 1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis) - 4) * Common.blockTextureSize);
-                    block.LoadContent(Content, block.Texture);
-                }  
-            }
-            else if (_keyboardState.IsKeyDown(Keys.Left) && !_previousKeyboardState.IsKeyDown(Keys.Left))
-            {
-                if(_board.canMoveLeft(_currentPiece))
-                    _currentPiece.moveLeft(Content);
-            }   
-            else if (_keyboardState.IsKeyDown(Keys.Right) && !_previousKeyboardState.IsKeyDown(Keys.Right))
-            {
-                if(_board.canMoveRight(_currentPiece))
-                    _currentPiece.moveRight(Content);
-            }
-            else if (_keyboardState.IsKeyDown(Keys.T) && !_previousKeyboardState.IsKeyDown(Keys.T))
-            {
-                if (_board.canRotate(_currentPiece)) {
-                    _currentPiece.rotate(Content);
-                }
-                foreach (Block.ABlock block in _currentPiece.Blocks)
-                {
-                    block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)-3) * Common.blockTextureSize);
-                    block.LoadContent(Content, block.Texture);
-                }   
-            }
-            else if (_keyboardState.IsKeyDown(Keys.Escape))
-                this.Exit();
-            else if (_keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))
-            {
-                _isAGoToGoDown = true;
                 this.moveDown(gameTime, Content);
+
+
+                //Player interactions
+                if (_keyboardState.IsKeyDown(Keys.Down) && !_previousKeyboardState.IsKeyDown(Keys.Down))
+                {
+                    if (_board.canRotate(_currentPiece))
+                    {
+                        _currentPiece.rotate(Content);
+                    }
+                    foreach (Block.ABlock block in _currentPiece.Blocks)
+                    {
+                        block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis) - 1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis) - 4) * Common.blockTextureSize);
+                        block.LoadContent(Content, block.Texture);
+                    }
+                }
+                else if (_keyboardState.IsKeyDown(Keys.Left) && !_previousKeyboardState.IsKeyDown(Keys.Left))
+                {
+                    if (_board.canMoveLeft(_currentPiece))
+                        _currentPiece.moveLeft(Content);
+                }
+                else if (_keyboardState.IsKeyDown(Keys.Right) && !_previousKeyboardState.IsKeyDown(Keys.Right))
+                {
+                    if (_board.canMoveRight(_currentPiece))
+                        _currentPiece.moveRight(Content);
+                }
+                else if (_keyboardState.IsKeyDown(Keys.T) && !_previousKeyboardState.IsKeyDown(Keys.T))
+                {
+                    if (_board.canRotate(_currentPiece))
+                    {
+                        _currentPiece.rotate(Content);
+                    }
+                    foreach (Block.ABlock block in _currentPiece.Blocks)
+                    {
+                        block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis) - 1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis) - 3) * Common.blockTextureSize);
+                        block.LoadContent(Content, block.Texture);
+                    }
+                }
+                else if (_keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))
+                {
+                    _isAGoToGoDown = true;
+                    this.moveDown(gameTime, Content);
+                }
+                
             }
+            else
+            {
+                _gameOver = true;
+            }
+            if (_keyboardState.IsKeyDown(Keys.Escape))
+              this.Exit();
             _previousKeyboardState = _keyboardState;
             base.Update(gameTime);
         }
@@ -212,6 +226,7 @@ namespace Tetris
                 if(_currentPiece.Y_axis - block.Y_axis >= 4)
                     block.Draw(spriteBatch, gameTime);
             }
+
             //DRAW the board
             _board.drawBoard(spriteBatch, gameTime);
             
@@ -219,6 +234,8 @@ namespace Tetris
             spriteBatch.DrawString(_informationsFont, + _points + " points", new Vector2(Common.informationsStartX, Common.informationsStartY), Color.White);
             spriteBatch.DrawString(_informationsFont, _level.ToString(), new Vector2(Common.informationsStartX + 140, Common.informationsStartY + 50), Color.White);
             spriteBatch.DrawString(_informationsFont, _board.GameHeight.ToString(), new Vector2(Common.informationsStartX+140, Common.informationsStartY+100), Color.White);
+            if(_gameOver)
+                spriteBatch.DrawString(_gameOverFont, "GAME OVER", new Vector2(20, 200), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
