@@ -75,6 +75,10 @@ namespace Tetris
             this.countGameHeight();
         }
 
+        /*
+         * This function will analyse the piece passed and check if one of the bottom blocks is next to another
+         * Return: It will return true if we can move down, otherwise it will returne false
+         */ 
         public bool canMoveDown(Piece.APiece piece)
         {
             bool result = true;
@@ -109,6 +113,11 @@ namespace Tetris
             return result;
         }
 
+        /*
+         * This function will analyse the piece passed and check if one of the right blocks is next to another
+         * Return: It will return true if we can do the move, otherwise it will returne false
+
+         */
         public bool canMoveRight(Piece.APiece piece)
         {
             bool result = true;
@@ -143,6 +152,10 @@ namespace Tetris
             return result;
         }
 
+        /*
+         * This function will analyse the piece passed and check if one of the left blocks is next to another
+         * Return: It will return true if we can do the move, otherwise it will returne false
+         */
         public bool canMoveLeft(Piece.APiece piece){
             bool result = true;
             int sum, i = 0, j;
@@ -190,6 +203,10 @@ namespace Tetris
             }
         }
 
+        /*
+         * This function will analyse the piece passed and check if we are able to rotate without collision with other elements
+         * Return: It will return true if we can do the move, otherwise it will returne false
+         */
         public bool canRotate(Piece.APiece piece)
         {
             Piece.APiece pieceTemp = piece;

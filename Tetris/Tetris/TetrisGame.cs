@@ -145,10 +145,9 @@ namespace Tetris
         {
             _keyboardState = Keyboard.GetState();
 
-            if (_board.GameHeight < 21)
+            if (_board.GameHeight < 20)
             {
                 this.moveDown(gameTime, Content);
-
 
                 //Player interactions
                 if (_keyboardState.IsKeyDown(Keys.Down) && !_previousKeyboardState.IsKeyDown(Keys.Down))
@@ -173,24 +172,11 @@ namespace Tetris
                     if (_board.canMoveRight(_currentPiece))
                         _currentPiece.moveRight(Content);
                 }
-                else if (_keyboardState.IsKeyDown(Keys.T) && !_previousKeyboardState.IsKeyDown(Keys.T))
-                {
-                    if (_board.canRotate(_currentPiece))
-                    {
-                        _currentPiece.rotate(Content);
-                    }
-                    foreach (Block.ABlock block in _currentPiece.Blocks)
-                    {
-                        block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis) - 1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis) - 3) * Common.blockTextureSize);
-                        block.LoadContent(Content, block.Texture);
-                    }
-                }
                 else if (_keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))
                 {
                     _isAGoToGoDown = true;
                     this.moveDown(gameTime, Content);
                 }
-                
             }
             else
             {
@@ -309,9 +295,9 @@ namespace Tetris
         {
             //Add the piece to the board
             _board.addPiece(_currentPiece, Content, this);
-            _board.print(); //TODO DEBUG ONLY
+            _board.print(); //TODO DEBUG ONLY (Logical view, only used for collisions checks)
 
-            //Updating the player piece to be equal as the preview windows and set up center & outside of the board
+            //Updating the player piece to be equal as the preview windows and set up center & outside of the view
             _currentPiece = _nextPiece;
             _currentPiece.X_axis = 5;
             _currentPiece.Y_axis = 3;
