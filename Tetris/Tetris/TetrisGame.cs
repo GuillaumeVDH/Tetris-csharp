@@ -83,7 +83,7 @@ namespace Tetris
 
             //Init sound background music
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 0.1f;
+            MediaPlayer.Volume = 0.8f;
 
             //Gameplay
             _points = 0;
@@ -294,7 +294,7 @@ namespace Tetris
         private void addPieceToBoard(ContentManager Content)
         {
             //Add the piece to the board
-            _board.addPiece(_currentPiece, Content);
+            _board.addPiece(_currentPiece, Content, this);
             _board.print(); //TODO DEBUG ONLY
 
             //Updating the player piece to be equal as the preview windows and set up center & outside of the board

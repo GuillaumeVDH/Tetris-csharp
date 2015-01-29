@@ -60,7 +60,7 @@ namespace Tetris
                 throw new Exception("removeBlock - Out of bounds coordinates (x/y):" + (piece_x + block.X_axis) + "/" + (piece_y - block.Y_axis));
         }
 
-        public void addPiece(Piece.APiece piece, ContentManager content) {
+        public void addPiece(Piece.APiece piece, ContentManager content, TetrisGame tetrisgame) {
             foreach (Block.ABlock block in piece.Blocks)
             {
                 try {
@@ -71,7 +71,7 @@ namespace Tetris
                     Console.WriteLine(e.Message);
                 }
             }
-            this.deleteFullRows();
+            this.deleteFullRows(tetrisgame);
             this.countGameHeight();
         }
 
@@ -240,11 +240,8 @@ namespace Tetris
         }
 
         private void deleteRows(int y, int nbRows){
-            //Console.WriteLine("Before deletion :");
-            //print();
             for (int j = 0; j < nbRows; j++)
             {
-                Console.WriteLine("Deleting row Y:" + (j + y));
                 for (int i = 1; i < Common.boardSizeX - 1; i++)
                 {
                     Vector2 position = new Vector2(Blocks[j + y, i].Position.X, Blocks[j + y, i].Position.Y);
@@ -255,7 +252,6 @@ namespace Tetris
             
            for (int j = y + nbRows - 1; j > nbRows; j--)
            {
-                Console.WriteLine("Updating row Y:" + j);
                 for (int i = 1; i < Common.boardSizeX - 1; i++)
                 {
                     Blocks[j, i] = Blocks[j - nbRows, i];
@@ -264,8 +260,6 @@ namespace Tetris
                     Blocks[j, i].Position = position;
                 }
             }
-            Console.WriteLine("deletion :");
-            print();
         }
 
         public bool isFullRow(int y)
@@ -282,7 +276,7 @@ namespace Tetris
             return (sum == 0);
         }
 
-        public void deleteFullRows()
+        public void deleteFullRows(TetrisGame tetrisgame)
         {
             int j = 0, y, nbRows = 0;
             while (j < Common.boardSizeY - 1)
@@ -300,6 +294,7 @@ namespace Tetris
                 }
                 j++;
             }
+            tetrisgame.scoreCounter(nbRows);
         }
     }
 }
