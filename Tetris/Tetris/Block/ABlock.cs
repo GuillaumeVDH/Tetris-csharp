@@ -33,5 +33,14 @@ namespace Tetris.Block
         {
             return Index.ToString();
         }
+
+        public ABlock(ABlock block)
+        {
+            this.X_axis = block.X_axis;
+            this.Y_axis = block.Y_axis;
+            this.Index = block.Index;
+            this.Position = block.Position;
+            this.Texture = block.Texture;
+        }
     }
 }

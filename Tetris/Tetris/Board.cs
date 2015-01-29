@@ -235,9 +235,65 @@ namespace Tetris
                     }
                 }
             }
-            Console.WriteLine("res " + GameHeight);
-
         }
 
+        private void deleteRows(int y, int nbRows){
+            Console.WriteLine("Before deletion :");
+            print();
+            for (int j = 0; j < nbRows; j++)
+            {
+                for (int i = 1; i < Common.boardSizeX - 1; i++)
+                {
+                    Vector2 position = new Vector2(Blocks[j + y, i].Position.X, Blocks[j + y, i].Position.Y);
+                    Blocks[j + y, i] = new BlockEmpty(0, 0);
+                    Blocks[j + y, i].Position = position;
+                }
+            }
+            for (int j = y + nbRows - 1; j > nbRows; j--)
+            {
+                for (int i = 1; i < Common.boardSizeX - 1; i++)
+                {
+                    Vector2 position = new Vector2(Blocks[j, i].Position.X, Blocks[j, i].Position.Y);
+                    Blocks[j, i] = Blocks[j - nbRows, i];
+                    Blocks[j, i].Position = position;
+                }
+            }
+            Console.WriteLine("deletion :");
+            print();
+        }
+
+        public bool isFullRow(int y)
+        {
+            int sum = 0;
+            for (int i = 1; i < Common.boardSizeX - 1; i++)
+            {
+                if (Blocks[y, i].Index == 0)
+                {
+                    sum++;
+                }
+            }
+
+            return (sum == 0);
+        }
+
+        public void deleteFullRows()
+        {
+            int j = 0, y, nbRows = 0;
+            while (j < Common.boardSizeY - 1)
+            {
+                if (isFullRow(j))
+                {
+                    y = j;
+                    nbRows++;
+                    while (j != Common.boardSizeY - 2 && isFullRow(j + 1))
+                    {
+                        nbRows++;
+                        j++;
+                    }
+                    deleteRows(y, nbRows);
+                }
+                j++;
+            }
+        }
     }
 }
