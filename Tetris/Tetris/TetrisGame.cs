@@ -46,6 +46,9 @@ namespace Tetris
         private int _points;
         private int _level;
 
+        //random
+        private static Random rnd = new Random();
+
         public TetrisGame()
         {
             IsFixedTimeStep = true;
@@ -159,7 +162,7 @@ namespace Tetris
                 }
                 foreach (Block.ABlock block in _currentPiece.Blocks)
                 {
-                    block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)-3) * Common.blockTextureSize);
+                    block.Position = new Vector2(Common.boardStartX + ((_currentPiece.X_axis + block.X_axis)-1) * Common.blockTextureSize, Common.boardStartY + ((_currentPiece.Y_axis - block.Y_axis)-4) * Common.blockTextureSize);
                     block.LoadContent(Content, block.Texture);
                 }   
             }
@@ -189,6 +192,9 @@ namespace Tetris
                     block.LoadContent(Content, block.Texture);
                 }
             }
+
+            _board.deleteFullRows();
+
             _previousKeyboardState = _keyboardState;
             base.Update(gameTime);
         }
@@ -231,7 +237,6 @@ namespace Tetris
          */
         public void randomPiece()
         {
-            Random rnd = new Random();
             int random = rnd.Next(1, 8);
             if (random == 1)
                 _nextPiece = new Piece.PieceI(0, 0);
